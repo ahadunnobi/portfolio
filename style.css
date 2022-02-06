@@ -70,9 +70,10 @@ h1 span,
 #collor2{
     background: #FFF4D6;
 }
-#subscribe{
+.subscribe{
     display: flex;
     justify-content: center;
+    margin-bottom: 200px;
 }
 .form-control{
     width: 100%;
