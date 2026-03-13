@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, MapPin, Zap, Globe } from 'lucide-react'
+import { Github, Linkedin, Mail, MapPin, Zap, Globe, Instagram } from 'lucide-react'
 import ThreeScene from './components/ThreeScene'
 import './index.css'
 
@@ -25,15 +25,18 @@ function App() {
   return (
     <div className="spa-container no-scroll">
       {/* Navigation */}
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, padding: '24px 0', borderBottom: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)' }}>
+      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, padding: '20px 0', borderBottom: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)' }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          {/* Left: Logo */}
           <div 
-            style={{ fontFamily: 'var(--font-head)', fontWeight: 800, fontSize: '1.2rem', letterSpacing: '0.1em', cursor: 'pointer' }}
+            style={{ fontFamily: 'var(--font-head)', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '0.1em', cursor: 'pointer', color: 'var(--neon-lime)' }}
             onClick={() => setActiveSection('hero')}
           >
             AN.
           </div>
-          <div style={{ display: 'flex', gap: '32px', fontFamily: 'var(--font-alt)', fontSize: '0.85rem', fontWeight: 600, letterSpacing: '0.05em' }}>
+
+          {/* Center-Left: Section Links */}
+          <div style={{ display: 'flex', gap: '24px', fontFamily: 'var(--font-alt)', fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.1em', marginLeft: '40px', flex: 1 }}>
             {sections.slice(1).map(section => (
               <button
                 key={section.id}
@@ -41,19 +44,28 @@ function App() {
                 style={{ 
                   background: 'none', 
                   border: 'none', 
-                  color: activeSection === section.id ? 'var(--neon-lime)' : 'inherit', 
+                  color: activeSection === section.id ? 'var(--text-color)' : 'rgba(248, 250, 252, 0.5)', 
                   cursor: 'pointer', 
-                  opacity: activeSection === section.id ? 1 : 0.7,
                   fontFamily: 'inherit',
                   fontSize: 'inherit',
                   fontWeight: 'inherit',
                   letterSpacing: 'inherit',
-                  transition: 'all 0.3s ease'
+                  transition: 'all 0.3s ease',
+                  padding: '8px 0',
+                  borderBottom: activeSection === section.id ? '2px solid var(--neon-lime)' : '2px solid transparent'
                 }}
               >
                 {section.label}
               </button>
             ))}
+          </div>
+
+          {/* Right: Social Links */}
+          <div style={{ display: 'flex', gap: '20px', alignItems: 'center' }}>
+            <a href="https://github.com/ahadunnobi" target="_blank" style={{ color: 'inherit', opacity: 0.6, transition: 'opacity 0.3s' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}><Github size={18} /></a>
+            <a href="https://linkedin.com/in/ahadunnobi" target="_blank" style={{ color: 'inherit', opacity: 0.6, transition: 'opacity 0.3s' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}><Linkedin size={18} /></a>
+            <a href="https://instagram.com/ahadunnobi" target="_blank" style={{ color: 'inherit', opacity: 0.6, transition: 'opacity 0.3s' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}><Instagram size={18} /></a>
+            <a href="#" target="_blank" style={{ color: 'inherit', opacity: 0.6, transition: 'opacity 0.3s' }} onMouseEnter={e => e.currentTarget.style.opacity = '1'} onMouseLeave={e => e.currentTarget.style.opacity = '0.6'}><Globe size={18} /></a>
           </div>
         </div>
       </nav>
@@ -239,15 +251,13 @@ function App() {
       </main>
 
       {/* Global Footer */}
-      <footer style={{ position: 'fixed', bottom: 0, width: '100%', padding: '24px 0', borderTop: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)', zIndex: 100 }}>
+      <footer style={{ position: 'fixed', bottom: 0, width: '100%', padding: '16px 0', borderTop: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)', zIndex: 100 }}>
         <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
-          <p style={{ fontFamily: 'var(--font-alt)', fontSize: '0.65rem', color: '#64748b', letterSpacing: '0.2em', fontWeight: 700 }}>
-            © 2026 AHADUN NOBI · DESIGNED FOR THE FUTURE
+          <p style={{ fontFamily: 'var(--font-alt)', fontSize: '0.6rem', color: '#64748b', letterSpacing: '0.2em', fontWeight: 700 }}>
+            © 2026 AHADUN NOBI · CRAFTED WITH PASSION
           </p>
-          <div style={{ display: 'flex', gap: '20px' }}>
-             <Github size={16} style={{ opacity: 0.5 }} />
-             <Linkedin size={16} style={{ opacity: 0.5 }} />
-             <Globe size={16} style={{ opacity: 0.5 }} />
+          <div style={{ fontFamily: 'var(--font-alt)', fontSize: '0.6rem', color: 'rgba(200, 240, 96, 0.4)', fontWeight: 800 }}>
+            BUILT WITH REACT & THREE.JS
           </div>
         </div>
       </footer>
