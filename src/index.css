@@ -21,20 +21,15 @@
   box-sizing: border-box;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
-body {
-  font-family: var(--font-body);
+html, body, #root {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* Lock the viewport */
   background-color: var(--bg-color);
   color: var(--text-color);
-  min-height: 100vh;
-  overflow-x: hidden;
-  position: relative;
+  font-family: var(--font-body);
 }
 
-/* Mesh Gradient Background */
 body::before {
   content: '';
   position: fixed;
@@ -57,18 +52,15 @@ body::before {
   border: 1px solid var(--glass-border);
   border-radius: 20px;
   box-shadow: var(--card-shadow);
-  transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-}
-
-.glass:hover {
-  border-color: rgba(200, 240, 96, 0.3);
-  transform: translateY(-5px);
 }
 
 .container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 32px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 
 h1, h2, h3 {
@@ -84,8 +76,25 @@ h1, h2, h3 {
   background-clip: text;
 }
 
-section {
-  padding: 120px 0;
+/* SPA Section Constraints */
+.spa-container {
+  position: relative;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.section-view {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 80px; /* Space for fixed nav */
+  padding-bottom: 60px; /* Space for fixed footer */
 }
 
 .btn {
@@ -108,11 +117,6 @@ section {
   color: #030712;
 }
 
-.btn-primary:hover {
-  transform: translateY(-2px);
-  box-shadow: 0 4px 20px rgba(200, 240, 96, 0.4);
-}
-
 .btn-ghost {
   background: transparent;
   color: var(--text-color);
@@ -124,24 +128,9 @@ section {
   border-color: var(--neon-lime);
 }
 
-.grid {
-  display: grid;
-  gap: 32px;
-}
-
-@media (min-width: 768px) {
-  .grid-cols-2 { grid-template-columns: repeat(2, 1fr); }
-  .grid-cols-3 { grid-template-columns: repeat(3, 1fr); }
-}
-
-/* Animations */
-@keyframes fadeIn {
-  from { opacity: 0; transform: translateY(30px); }
-  to { opacity: 1; transform: translateY(0); }
-}
-
-.animate-fade-in {
-  animation: fadeIn 0.8s ease forwards;
+/* Scrollable areas within sections if needed, but the requirement is "No scrolling allowed within this view" */
+.no-scroll {
+  overflow: hidden;
 }
 
 ::selection {
