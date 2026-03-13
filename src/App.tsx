@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, MapPin, Globe, Instagram, Phone } from 'lucide-react'
+import { Github, Linkedin, Mail, MapPin, Globe, Instagram, Phone, Zap } from 'lucide-react'
 import './index.css'
 
 const sectionVariants = {
