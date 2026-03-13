@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Mail, Phone, ExternalLink, Code2, Rocket, Briefcase, GraduationCap } from 'lucide-react'
+import { Github, Linkedin, Mail, Phone, ExternalLink, Code2, Rocket, Briefcase } from 'lucide-react'
 import ThreeScene from './components/ThreeScene'
 import './index.css'
 
