@@ -1,49 +1,134 @@
-import { useState, useEffect, useRef } from 'react'
+import { useState, useEffect, useRef, useMemo, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { Github, Linkedin, Mail, MapPin, Globe, Instagram, Phone, Zap } from 'lucide-react'
+import { Canvas, useFrame, useThree } from '@react-three/fiber'
+import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
+import * as THREE from 'three'
+import { Github, Linkedin, Mail, MapPin, Globe, Instagram, Zap } from 'lucide-react'
 import './index.css'
+
+// --- Components ---
+
+const Background = () => {
+  return (
+    <div className="bg-canvas-wrapper">
+      <Canvas camera={{ position: [0, 0, 5], fov: 75 }}>
+        <ambientLight intensity={0.5} />
+        <pointLight position={[10, 10, 10]} intensity={1} color="#c8f060" />
+        <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+        <Suspense fallback={null}>
+          <Float speed={2} rotationIntensity={0.5} floatIntensity={0.5}>
+            <mesh position={[2, 0, -2]}>
+              <sphereGeometry args={[1.5, 64, 64]} />
+              <MeshDistortMaterial
+                color="#111111"
+                emissive="#c8f060"
+                emissiveIntensity={0.15}
+                roughness={0.1}
+                distort={0.4}
+                speed={2}
+              />
+            </mesh>
+          </Float>
+        </Suspense>
+      </Canvas>
+    </div>
+  )
+}
+
+const FieryCursor = () => {
+  const canvasRef = useRef<HTMLCanvasElement>(null)
+  const mousePos = useRef({ x: 0, y: 0 })
+  const particles = useRef<any[]>([])
+
+  useEffect(() => {
+    const canvas = canvasRef.current
+    if (!canvas) return
+    const ctx = canvas.getContext('2d')
+    if (!ctx) return
+
+    const handleMouseMove = (e: MouseEvent) => {
+      mousePos.current = { x: e.clientX, y: e.clientY }
+    }
+
+    const handleResize = () => {
+      canvas.width = window.innerWidth
+      canvas.height = window.innerHeight
+    }
+
+    window.addEventListener('mousemove', handleMouseMove)
+    window.addEventListener('resize', handleResize)
+    handleResize()
+
+    let animationFrameId: number
+
+    const createParticle = (x: number, y: number) => {
+      const angle = Math.random() * Math.PI * 2
+      const speed = Math.random() * 2 + 1
+      return {
+        x,
+        y,
+        vx: Math.cos(angle) * speed,
+        vy: Math.sin(angle) * speed - 1.5,
+        life: 0,
+        maxLife: Math.random() * 40 + 20,
+        size: Math.random() * 3 + 1.5,
+        color: `hsla(${Math.random() * 30 + 55}, 100%, 70%, 1)` // Yellow-green range
+      }
+    }
+
+    const render = () => {
+      ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+      if (mousePos.current.x !== 0) {
+        for (let i = 0; i < 4; i++) {
+          particles.current.push(createParticle(mousePos.current.x, mousePos.current.y))
+        }
+      }
+
+      particles.current = particles.current.filter((p) => {
+        p.x += p.vx
+        p.y += p.vy
+        p.life++
+        
+        const opacity = 1 - p.life / p.maxLife
+        const currentSize = p.size * opacity
+
+        ctx.beginPath()
+        ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2)
+        ctx.fillStyle = p.color.replace('1)', `${opacity})`)
+        ctx.fill()
+
+        // Glow effect
+        ctx.shadowBlur = 15;
+        ctx.shadowColor = p.color;
+
+        return p.life < p.maxLife
+      })
+
+      animationFrameId = requestAnimationFrame(render)
+    }
+
+    render()
+
+    return () => {
+      window.removeEventListener('mousemove', handleMouseMove)
+      window.removeEventListener('resize', handleResize)
+      cancelAnimationFrame(animationFrameId)
+    }
+  }, [])
+
+  return <canvas ref={canvasRef} className="cursor-canvas" />
+}
 
 const sectionVariants = {
   initial: { opacity: 0, y: 30 },
   animate: { opacity: 1, y: 0 },
   exit: { opacity: 0, y: -30 },
-  transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] } as any
+  transition: { duration: 0.5, ease: [0.22, 1, 0.36, 1] } as any
 }
 
 function App() {
   const [activeSection, setActiveSection] = useState('hero')
-  const [mousePos, setMousePos] = useState({ x: 0, y: 0 })
-  const [isHovering, setIsHovering] = useState(false)
-  const ringPos = useRef({ x: 0, y: 0 })
-  const trailPos = useRef({ x: 0, y: 0 })
-  const [ringState, setRingState] = useState({ x: 0, y: 0 })
-  const [trailState, setTrailState] = useState({ x: 0, y: 0 })
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePos({ x: e.clientX, y: e.clientY })
-    }
-    window.addEventListener('mousemove', handleMouseMove)
-    return () => window.removeEventListener('mousemove', handleMouseMove)
-  }, [])
-
-  useEffect(() => {
-    const animateCursor = () => {
-      // Smooth following for ring
-      ringPos.current.x += (mousePos.x - ringPos.current.x) * 0.12
-      ringPos.current.y += (mousePos.y - ringPos.current.y) * 0.12
-      setRingState({ x: ringPos.current.x, y: ringPos.current.y })
-
-      // Slower trail for "fiery" effect
-      trailPos.current.x += (mousePos.x - trailPos.current.x) * 0.08
-      trailPos.current.y += (mousePos.y - trailPos.current.y) * 0.08
-      setTrailState({ x: trailPos.current.x, y: trailPos.current.y })
-
-      requestAnimationFrame(animateCursor)
-    }
-    const animationFrame = requestAnimationFrame(animateCursor)
-    return () => cancelAnimationFrame(animationFrame)
-  }, [mousePos])
 
   const sections = [
     { id: 'hero', label: 'Home' },
@@ -55,54 +140,34 @@ function App() {
 
   return (
     <div className="spa-container">
-      {/* Dynamic Cursor UI */}
-      <div className="cursor-wrapper">
-        <div 
-          className="cursor-trail" 
-          style={{ left: trailState.x, top: trailState.y, transform: `translate(-50%, -50%) scale(${isHovering ? 1.5 : 1})` }}
-        ></div>
-        <div 
-          className="cursor-ring" 
-          style={{ 
-            left: ringState.x, 
-            top: ringState.y, 
-            width: isHovering ? '60px' : '40px', 
-            height: isHovering ? '60px' : '40px' 
-          }}
-        ></div>
-        <div className="cursor-dot" style={{ left: mousePos.x, top: mousePos.y }}></div>
-      </div>
+      <Background />
+      <FieryCursor />
 
       {/* Navigation */}
-      <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, height: 'var(--nav-height)', borderBottom: '1px solid var(--border)', backdropFilter: 'blur(20px)', background: 'rgba(10,10,10,0.85)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
+      <nav className="nav-fix">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
           <div 
-            className="nav-logo"
-            style={{ cursor: 'pointer', height: '32px', display: 'flex', alignItems: 'center' }}
+            style={{ cursor: 'pointer', height: '36px', display: 'flex', alignItems: 'center' }}
             onClick={() => setActiveSection('hero')}
-            onMouseEnter={() => setIsHovering(true)}
-            onMouseLeave={() => setIsHovering(false)}
           >
-            <img src="/assets/navbar-logo.png" alt="Ahadun Nobi" style={{ height: '100%', width: 'auto', filter: 'invert(1) brightness(1.5)' }} />
+            <img src="/assets/navbar-logo.png" alt="Ahad" style={{ height: '100%', width: 'auto', filter: 'invert(1) brightness(1.5)' }} />
           </div>
 
-          <div style={{ display: 'flex', gap: '3rem', listStyle: 'none', alignItems: 'center', flex: 1, marginLeft: '5rem' }}>
+          <div style={{ display: 'flex', gap: '3.5rem', listStyle: 'none', alignItems: 'center', flex: 1, marginLeft: '6rem' }}>
             {sections.slice(1).map(section => (
               <button
                 key={section.id}
                 onClick={() => setActiveSection(section.id)}
-                onMouseEnter={() => setIsHovering(true)}
-                onMouseLeave={() => setIsHovering(false)}
                 style={{ 
                   background: 'none', 
                   border: 'none', 
                   color: activeSection === section.id ? 'var(--accent)' : 'var(--muted)', 
                   cursor: 'pointer', 
                   fontFamily: 'var(--font-nav)',
-                  fontSize: '0.9rem',
+                  fontSize: '1rem',
                   letterSpacing: '0.05em',
-                  transition: 'all 0.3s',
-                  padding: '10px 0',
+                  transition: 'all 0.4s cubic-bezier(0.23, 1, 0.32, 1)',
+                  padding: '14px 0',
                   fontWeight: activeSection === section.id ? '700' : '500',
                   position: 'relative'
                 }}
@@ -111,7 +176,7 @@ function App() {
                 {activeSection === section.id && (
                   <motion.div 
                     layoutId="nav-underline"
-                    style={{ position: 'absolute', bottom: 0, left: 0, right: 0, height: '2px', background: 'var(--accent)' }}
+                    style={{ position: 'absolute', bottom: 0, left: '-5%', right: '-5%', height: '3px', background: 'var(--accent)' }}
                   />
                 )}
               </button>
@@ -119,10 +184,18 @@ function App() {
           </div>
 
           <div style={{ display: 'flex', gap: '1.75rem', alignItems: 'center' }}>
-            <a href="https://github.com/ahadunnobi" target="_blank" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} style={{ color: 'var(--muted)', transition: 'color 0.3s' }}><Github size={18} /></a>
-            <a href="https://linkedin.com/in/ahadunnobi" target="_blank" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} style={{ color: 'var(--muted)', transition: 'color 0.3s' }}><Linkedin size={18} /></a>
-            <a href="https://instagram.com/ahadunnobi" target="_blank" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} style={{ color: 'var(--muted)', transition: 'color 0.3s' }}><Instagram size={18} /></a>
-            <a href="#" target="_blank" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} style={{ color: 'var(--muted)', transition: 'color 0.3s' }}><Globe size={18} /></a>
+            <a href="https://github.com/ahadunnobi" target="_blank"  
+  
+ style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Github size={22} /></a>
+            <a href="https://linkedin.com/in/ahadunnobi" target="_blank"  
+  
+ style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Linkedin size={22} /></a>
+            <a href="https://instagram.com/ahadunnobi" target="_blank"  
+  
+ style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Instagram size={22} /></a>
+            <a href="https://ahadven.netlify.app" target="_blank"  
+  
+ style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Globe size={22} /></a>
           </div>
         </div>
       </nav>
@@ -137,40 +210,42 @@ function App() {
               {...sectionVariants}
             >
               <div className="section-content-wrapper">
-                <div className="hero-grid-lines"></div>
-                <div className="hero-orb"></div>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', alignItems: 'center', gap: '5rem' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', alignItems: 'center', gap: '7rem' }}>
                   <div style={{ zIndex: 1 }}>
-                    <div className="hero-tag">AVAILABLE FOR OPPORTUNITIES</div>
-                    <h1 style={{ fontSize: 'clamp(3.5rem, 8vw, 6.5rem)', lineHeight: 0.9, marginBottom: '2rem' }}>
+                    <div className="hero-tag">OPEN FOR COLLABORATION</div>
+                    <h1 style={{ fontSize: 'clamp(3.5rem, 8vw, 7.2rem)', lineHeight: 0.9, marginBottom: '3rem' }}>
                       Ahadun<br /><span style={{ color: 'var(--accent)' }}>Nobi</span>
                     </h1>
-                    <p style={{ fontSize: '1.25rem', color: 'var(--muted)', lineHeight: 1.6, maxWidth: '520px', marginBottom: '3rem', fontWeight: '500' }}>
-                      MERN Developer & Philosopher — building professional digital experiences fueled by existential inquiry.
+                    <p style={{ fontSize: '1.35rem', color: 'var(--muted)', lineHeight: 1.7, maxWidth: '560px', marginBottom: '4rem', fontWeight: '500' }}>
+                      Full-Stack Architect scaling professional digital solutions with <span style={{ color: 'var(--text)' }}>React, Node.js, Express, and MongoDB</span>, driven by existential inquiry.
                     </p>
-                    <div style={{ display: 'flex', gap: '2.5rem', marginBottom: '3.5rem' }}>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <MapPin size={16} style={{ color: 'var(--accent)' }} /> Chattogram, Bangladesh
+                    <div style={{ display: 'flex', gap: '3rem', marginBottom: '4.5rem' }}>
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                        <MapPin size={20} style={{ color: 'var(--accent)' }} /> Chattogram, BD
                       </div>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
-                        <Zap size={16} style={{ color: 'var(--accent)' }} /> Trainee @ Programming Hero
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)', display: 'flex', alignItems: 'center', gap: '0.8rem' }}>
+                        <Zap size={20} style={{ color: 'var(--accent)' }} /> Programming Hero · Batch 13
                       </div>
                     </div>
-                    <div style={{ display: 'flex', gap: '1.25rem' }}>
-                      <button onClick={() => setActiveSection('contact')} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} className="btn-primary">GET IN TOUCH</button>
-                      <button onClick={() => setActiveSection('projects')} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} className="btn-ghost">VIEW PROJECTS</button>
+                    <div style={{ display: 'flex', gap: '1.5rem' }}>
+                      <button onClick={() => setActiveSection('contact')}  
+  
+ className="btn-primary">INITIATE CONTACT</button>
+                      <button onClick={() => setActiveSection('projects')}  
+  
+ className="btn-ghost">VIEW PROJECTS</button>
                     </div>
                   </div>
                   <div style={{ display: 'flex', justifyContent: 'center', position: 'relative' }}>
-                    <div style={{ position: 'relative', width: '380px', height: '480px' }}>
+                    <div style={{ position: 'relative', width: '420px', height: '560px' }}>
                       <img 
                         src="/assets/profile.png" 
                         alt="Ahadun Nobi" 
-                        style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(10%) contrast(1.1)', border: '1px solid var(--border)' }}
+                        style={{ width: '100%', height: '100%', objectFit: 'cover', filter: 'grayscale(20%) contrast(1.2)', border: '1px solid var(--border)' }}
                       />
-                      <div style={{ position: 'absolute', bottom: '-25px', right: '-25px', width: '100%', height: '100%', border: '1px solid var(--accent)', opacity: 0.2, pointerEvents: 'none', zIndex: -1 }}></div>
-                      <div style={{ position: 'absolute', bottom: '24px', left: '-25px', background: 'var(--accent)', color: '#0a0a0a', fontFamily: 'var(--font-mono)', fontSize: '0.8rem', fontWeight: 700, letterSpacing: '0.15em', padding: '0.6rem 1.25rem' }}>
-                        FULL-STACK DEVELOPER
+                      <div style={{ position: 'absolute', bottom: '-40px', right: '-40px', width: '100%', height: '100%', border: '1px solid var(--accent)', opacity: 0.3, pointerEvents: 'none', zIndex: -1 }}></div>
+                      <div style={{ position: 'absolute', bottom: '40px', left: '-40px', background: 'var(--accent)', color: '#0a0a0a', fontFamily: 'var(--font-mono)', fontSize: '0.9rem', fontWeight: 800, letterSpacing: '0.25em', padding: '0.8rem 1.6rem' }}>
+                        FULL-STACK ENGINEER
                       </div>
                     </div>
                   </div>
@@ -187,31 +262,31 @@ function App() {
             >
               <div className="section-content-wrapper">
                 <p className="section-label">// 01 · ABOUT</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '7rem', alignItems: 'start' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '9rem', alignItems: 'start' }}>
                   <div>
-                    <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 3.8rem)', marginBottom: '3.5rem', lineHeight: 1.1 }}>Building systems<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>purpose</span>.</h2>
-                    <div style={{ fontSize: '1.15rem', lineHeight: '1.8', color: '#b0ada6', fontWeight: '400' }}>
-                      <p style={{ marginBottom: '1.5rem' }}>
-                        I specialize in the <strong style={{ color: 'var(--text)' }}>MERN Stack</strong>, crafting high-performance web applications that bridge the gap between complex logic and intuitive user experience. My approach is rooted in clean architecture and scalable design.
+                    <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', marginBottom: '4.5rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
+                    <div style={{ fontSize: '1.25rem', lineHeight: '1.9', color: '#b0ada6' }}>
+                      <p style={{ marginBottom: '2rem' }}>
+                        I specialize in the <strong style={{ color: 'var(--text)' }}>Modern Web Ecosystem</strong>, constructing robust platforms that prioritize performance and structural integrity. My technical philosophy is built on the belief that complex systems should feel effortless.
                       </p>
-                      <p style={{ marginBottom: '1.5rem' }}>
-                        As a philosophy student, I bring a unique analytical lens to software engineering. I don't just solve bugs; I deconstruct problems to their core essence to build robust solutions that stand the test of time.
+                      <p style={{ marginBottom: '2rem' }}>
+                        Applying first-principles thinking from my philosophical background, I don't just write scripts; I design architectures that solve fundamental problems with mathematical precision.
                       </p>
                       <p>
-                        Currently pushing boundaries as a trainee at <strong style={{ color: 'var(--text)' }}>Programming Hero</strong>, where I'm mastering modern development workflows and collaborative engineering.
+                        Currently advancing through <strong style={{ color: 'var(--text)' }}>Programming Hero</strong>, mastering cloud-native workflows and high-concurrency software development.
                       </p>
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '2rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
                     {[
-                      { num: '05+', label: 'DEVELOPED PROJECTS' },
-                      { num: '03', label: 'CERTIFICATIONS' },
+                      { num: '06+', label: 'DEPLOYED PLATFORMS' },
+                      { num: '03', label: 'ACCREDITATIONS' },
                       { num: '03', label: 'TECH SEGMENTS' },
                       { num: 'SGT', label: 'LEADERSHIP RANK' }
                     ].map((stat, i) => (
                       <div key={i} className="stat-card">
-                        <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.5rem' }}>{stat.num}</div>
-                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)', letterSpacing: '0.15em', fontWeight: '600' }}>{stat.label}</div>
+                        <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.7rem' }}>{stat.num}</div>
+                        <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', letterSpacing: '0.2em', fontWeight: '700' }}>{stat.label}</div>
                       </div>
                     ))}
                   </div>
@@ -226,21 +301,21 @@ function App() {
               className="section-view"
               {...sectionVariants}
             >
-              <div className="section-content-wrapper" style={{ maxWidth: '1000px' }}>
+              <div className="section-content-wrapper" style={{ maxWidth: '1100px' }}>
                 <p className="section-label">// 03 · EXPERIENCE</p>
-                <h2 style={{ fontSize: ' clamp(2.5rem, 5vw, 4rem)', marginBottom: '4rem' }}>Professional Journey</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
+                <h2 style={{ fontSize: ' clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '5rem' }}>Professional Record</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
                   {[
-                    { date: 'MAY 2024 – DEC 2025', role: 'Billing Executive', company: 'LAZZ PHARMA · FULL-TIME', desc: 'Managed complex pharmaceutical transactions and digital billing operations, ensuring 100% accuracy in high-pressure environments.' },
-                    { date: 'FEB 2022 – FEB 2025', role: 'Cadet Sergeant', company: 'BNCC ARMY WING', desc: 'Led a platoon of cadets, overseeing strategic training and maintaining strict operational discipline as a high-ranking student officer.' },
-                    { date: 'NOV 2019 – JAN 2022', role: 'ICT Consultant', company: 'SCIENCE EXPLORER', desc: 'Directed information technology strategies and digital transformation initiatives for a localized science education platform.' }
+                    { date: 'MAY 2024 – DEC 2025', role: 'Billing Executive', company: 'LAZZ PHARMA · FULL-TIME', desc: 'Managed high-concurrency digital billing operations and pharmaceutical inventory tracking, maintaining 100% data integrity.' },
+                    { date: 'FEB 2022 – FEB 2025', role: 'Cadet Sergeant', company: 'BNCC ARMY WING', desc: 'Commanded platoon exercises and operational logistics as a high-ranking cadet officer, overseeing strategic leadership training.' },
+                    { date: 'NOV 2019 – JAN 2022', role: 'ICT Consultant', company: 'SCIENCE EXPLORER', desc: 'Formulated digital education strategies and managed cloud infrastructure for high-scale localized platforms.' }
                   ].map((exp, i) => (
-                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '220px 1fr', gap: '4rem', padding: '3rem 0', borderBottom: i === 2 ? 'none' : '1px solid var(--border)' }}>
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', letterSpacing: '0.1em', fontWeight: '600' }}>{exp.date}</div>
+                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '6rem', padding: '4rem 0', borderBottom: i === 2 ? 'none' : '1px solid var(--border)' }}>
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)', letterSpacing: '0.15em', fontWeight: '700' }}>{exp.date}</div>
                       <div>
-                        <div style={{ fontSize: '1.5rem', fontWeight: 700, marginBottom: '0.5rem', color: 'var(--text)' }}>{exp.role}</div>
-                        <div style={{ fontFamily: 'var(--font-nav)', fontSize: '0.9rem', color: 'var(--accent)', letterSpacing: '0.1em', marginBottom: '1.25rem', fontWeight: '700' }}>{exp.company}</div>
-                        <p style={{ fontSize: '1.05rem', lineHeight: 1.8, color: '#9a9790' }}>{exp.desc}</p>
+                        <div style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '0.7rem', color: 'var(--text)' }}>{exp.role}</div>
+                        <div style={{ fontFamily: 'var(--font-nav)', fontSize: '1rem', color: 'var(--accent)', letterSpacing: '0.15em', marginBottom: '1.8rem', fontWeight: '800' }}>{exp.company}</div>
+                        <p style={{ fontSize: '1.15rem', lineHeight: 1.9, color: '#9a9790' }}>{exp.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -257,23 +332,25 @@ function App() {
             >
               <div className="section-content-wrapper">
                 <p className="section-label">// 04 · PROJECTS</p>
-                <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)', marginBottom: '4rem' }}>Selected Projects</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '2rem' }}>
+                <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '5rem' }}>Strategic Builds</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
                   {[
-                    { title: 'Dev Command Center', tag: 'MERN · 2026', img: '/assets/project-dev-command.png', stack: ['React', 'Node', 'MongoDB'] },
-                    { title: 'GitHub Issue Tracker', tag: 'JS · 2025', img: '/assets/project-github-issues.png', stack: ['JS', 'Tailwind', 'REST'] },
-                    { title: 'Job Tracker Platform', tag: 'FULLSTACK · 2026', img: '/assets/project-job-tracker.png', stack: ['React', 'Firebase', 'Vite'] }
+                    { title: 'Cloud Command System', tag: 'NODE.JS · 2026', img: '/assets/project-dev-command.png', stack: ['React', 'Node.js', 'MongoDB'] },
+                    { title: 'Global Issue Tracker', tag: 'TYPESCRIPT · 2025', img: '/assets/project-github-issues.png', stack: ['Express', 'RESTful API', 'Vite'] },
+                    { title: 'Job Analytics Engine', tag: 'FULLSTACK · 2026', img: '/assets/project-job-tracker.png', stack: ['React', 'Firebase', 'CSS3'] }
                   ].map((proj, i) => (
                     <div key={i} className="project-card">
-                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--accent2)', letterSpacing: '0.15em', border: '1px solid rgba(96,240,200,0.3)', padding: '0.3rem 0.75rem', display: 'inline-block', marginBottom: '1.5rem', fontWeight: '600' }}>{proj.tag}</div>
-                      <h3 style={{ fontSize: '1.5rem', marginBottom: '1.5rem' }}>{proj.title}</h3>
-                      <div style={{ width: '100%', height: '180px', background: 'var(--surface2)', marginBottom: '2rem', overflow: 'hidden', border: '1px solid var(--border)' }}>
-                        <img src={proj.img} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.8, transition: 'all 0.5s' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
+                      <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent2)', letterSpacing: '0.2em', border: '1px solid rgba(96,240,200,0.3)', padding: '0.5rem 1rem', display: 'inline-block', marginBottom: '2rem', fontWeight: '700' }}>{proj.tag}</div>
+                      <h3 style={{ fontSize: '1.7rem', marginBottom: '2rem' }}>{proj.title}</h3>
+                      <div style={{ width: '100%', height: '220px', background: 'var(--surface2)', marginBottom: '2.5rem', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                        <img src={proj.img} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
                       </div>
-                      <div style={{ display: 'flex', gap: '0.75rem', marginBottom: '2rem', flexWrap: 'wrap' }}>
-                         {proj.stack.map(s => <span key={s} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.7rem', color: 'var(--muted)', background: 'var(--surface2)', padding: '0.3rem 0.75rem', fontWeight: '500' }}>{s}</span>)}
+                      <div style={{ display: 'flex', gap: '0.8rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
+                         {proj.stack.map(s => <span key={s} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)', background: 'var(--surface2)', padding: '0.5rem 1rem', fontWeight: '600' }}>{s}</span>)}
                       </div>
-                      <a href="#" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} className="btn-ghost" style={{ padding: '0.75rem 1.5rem', fontSize: '0.8rem', width: '100%', justifyContent: 'center' }}>CASE STUDY →</a>
+                      <a href="#"  
+  
+ className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '0.9rem', width: '100%', justifyContent: 'center' }}>CASE ANALYSIS →</a>
                     </div>
                   ))}
                 </div>
@@ -288,25 +365,28 @@ function App() {
               {...sectionVariants}
             >
               <div className="section-content-wrapper">
-                <div style={{ display: 'grid', gridTemplateColumns: '1.3fr 1fr', gap: '8rem', alignItems: 'center' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '10rem', alignItems: 'center' }}>
                   <div>
                     <p className="section-label">// 06 · CONTACT</p>
-                    <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.04em', marginBottom: '2.5rem' }}>Let's<br />build<br /><span style={{ color: 'var(--accent)' }}>together.</span></h2>
-                    <p style={{ fontSize: '1.15rem', color: 'var(--muted)', lineHeight: 1.8, marginBottom: '3rem', fontWeight: '400' }}>I am currently open to Junior Developer roles and innovative freelance projects. Let's start a conversation about code, logic, and the future.</p>
-                    <a href="mailto:info.ahadunnobi@gmail.com" onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} className="btn-primary">INITIATE CONNECTION</a>
+                    <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em', marginBottom: '3.5rem' }}>Let's<br />build<br /><span style={{ color: 'var(--accent)' }}>together.</span></h2>
+                    <p style={{ fontSize: '1.3rem', color: 'var(--muted)', lineHeight: 1.85, marginBottom: '4rem', fontWeight: '400', maxWidth: '520px' }}>Open for Full-Stack opportunities and strategic technology partnerships. Engineering quality through architectural intelligence.</p>
+                    <a href="mailto:info.ahadunnobi@gmail.com"  
+  
+ className="btn-primary">ESTABLISH CHANNEL</a>
                   </div>
-                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem' }}>
+                  <div style={{ display: 'flex', flexDirection: 'column', gap: '1.75rem' }}>
                     {[
-                      { icon: <Mail size={20} />, label: 'DIRECT EMAIL', value: 'info.ahadunnobi@gmail.com', href: 'mailto:info.ahadunnobi@gmail.com' },
-                      { icon: <Phone size={20} />, label: 'VOICE CONTACT', value: '+88 01610-176181', href: 'tel:+8801610176181' },
-                      { icon: <Linkedin size={20} />, label: 'LINKEDIN', value: 'ahadunnobi', href: 'https://www.linkedin.com/in/ahadunnobi' },
-                      { icon: <Globe size={20} />, label: 'DIGITAL HUB', value: 'ahadven.netlify.app', href: 'https://ahadven.netlify.app' }
+                      { icon: <Mail size={24} />, label: 'OFFICIAL EMAIL', value: 'info.ahadunnobi@gmail.com', href: 'mailto:info.ahadunnobi@gmail.com' },
+                      { icon: <Linkedin size={24} />, label: 'PROFESSIONAL HUB', value: 'linkedin.com/in/ahadunnobi', href: 'https://www.linkedin.com/in/ahadunnobi' },
+                      { icon: <Globe size={24} />, label: 'DIGITAL DOMAIN', value: 'ahadven.netlify.app', href: 'https://ahadven.netlify.app' }
                     ].map((item, i) => (
-                      <a key={i} href={item.href} onMouseEnter={() => setIsHovering(true)} onMouseLeave={() => setIsHovering(false)} className="contact-link">
+                      <a key={i} href={item.href}  
+  
+ className="contact-link">
                          <div style={{ color: 'var(--accent)' }}>{item.icon}</div>
                          <div>
-                            <span style={{ color: 'var(--muted)', fontSize: '0.7rem', display: 'block', letterSpacing: '0.15em', fontWeight: '700', marginBottom: '0.2rem' }}>{item.label}</span>
-                            <span style={{ fontWeight: '600' }}>{item.value}</span>
+                            <span style={{ color: 'var(--muted)', fontSize: '0.8rem', display: 'block', letterSpacing: '0.2em', fontWeight: '800', marginBottom: '0.4rem', textTransform: 'uppercase' }}>{item.label}</span>
+                            <span style={{ fontWeight: '700', fontSize: '1.1rem' }}>{item.value}</span>
                          </div>
                       </a>
                     ))}
@@ -319,17 +399,17 @@ function App() {
       </main>
 
       {/* Global Footer */}
-      <footer style={{ position: 'fixed', bottom: 0, width: '100%', height: 'var(--footer-height)', borderTop: '1px solid var(--border)', backdropFilter: 'blur(20px)', background: 'rgba(10,10,10,0.85)', zIndex: 100 }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
-          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)', fontWeight: '500' }}>
-            © {new Date().getFullYear()} <span style={{ color: 'var(--accent)', fontWeight: '700' }}>Ahadun Nobi</span> — ENGINEERED INDIVIDUALLY
+      <footer className="footer-fix">
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+          <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)', fontWeight: '600' }}>
+            © {new Date().getFullYear()} <span style={{ color: 'var(--accent)', fontWeight: '800' }}>AHADUN NOBI</span> — ENGINEERED INDIVIDUALLY
           </p>
-          <div style={{ display: 'flex', gap: '2rem' }}>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)' }}>
-              BUILT WITH <span style={{ color: 'var(--accent)' }}>REACT</span>
+          <div style={{ display: 'flex', gap: '4rem' }}>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)' }}>
+              CORE <span style={{ color: 'var(--accent)' }}>REACT</span>
             </p>
-            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)' }}>
-              REFINED BY <span style={{ color: 'var(--accent)' }}>LOGIC</span>
+            <p style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)' }}>
+              REFINED <span style={{ color: 'var(--accent)' }}>LOGIC</span>
             </p>
           </div>
         </div>
