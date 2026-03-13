@@ -26,7 +26,7 @@ function App() {
     <div className="spa-container no-scroll">
       {/* Navigation */}
       <nav style={{ position: 'fixed', top: 0, width: '100%', zIndex: 100, padding: '20px 0', borderBottom: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)' }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
           {/* Left: Logo */}
           <div 
             style={{ fontFamily: 'var(--font-head)', fontWeight: 800, fontSize: '1.4rem', letterSpacing: '0.1em', cursor: 'pointer', color: 'var(--neon-lime)' }}
@@ -252,7 +252,7 @@ function App() {
 
       {/* Global Footer */}
       <footer style={{ position: 'fixed', bottom: 0, width: '100%', padding: '16px 0', borderTop: '1px solid var(--glass-border)', backdropFilter: 'blur(12px)', zIndex: 100 }}>
-        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+        <div className="container" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', flexDirection: 'row' }}>
           <p style={{ fontFamily: 'var(--font-alt)', fontSize: '0.6rem', color: '#64748b', letterSpacing: '0.2em', fontWeight: 700 }}>
             © 2026 AHADUN NOBI · CRAFTED WITH PASSION
           </p>
