@@ -86,7 +86,7 @@ h1, h2, h3 {
 /* SPA Section Constraints */
 .spa-container {
   position: relative;
-  width: 100vw;
+  width: 100%;
   height: 100vh;
   overflow: hidden;
   display: flex;
@@ -128,7 +128,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 3rem 0;
+  padding: 2rem 0;
 }
 
 .section-view::-webkit-scrollbar {
