@@ -1,11 +1,19 @@
+.projects-title {
+  text-align: center;
+  letter-spacing: -0.02em;
+  margin-bottom: 1.5rem;
+}
+
 .project-card {
   background: rgba(10, 10, 10, 0.6);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
-  padding: 2.5rem;
+  padding: 1.25rem;
   position: relative;
   overflow: hidden;
   transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
+  display: flex;
+  flex-direction: column;
 }
 
 .project-card::after {
@@ -20,7 +28,7 @@
 }
 
 .project-card:hover { 
-  transform: translateY(-8px); 
+  transform: translateY(-5px); 
   border-color: #444; 
   background: rgba(14, 14, 14, 0.9); 
 }
@@ -31,9 +39,10 @@
 
 .project-img-wrapper {
   width: 100%;
-  height: 160px;
+  aspect-ratio: 16 / 9;
+  max-height: 140px;
   background: var(--surface2);
-  margin-bottom: 1.5rem;
+  margin-bottom: 1rem;
   overflow: hidden;
   border: 1px solid var(--border);
 }

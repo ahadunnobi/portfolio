@@ -23,7 +23,7 @@
   box-sizing: border-box;
 }
 
-html, body, #root {
+body, #root {
   height: 100%;
   width: 100%;
   overflow: hidden;
@@ -58,12 +58,12 @@ h1, h2, h3 {
 
 .section-label {
   font-family: var(--font-mono);
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--accent);
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 1rem;
-  font-weight: 600;
+  margin-bottom: 0.5rem;
+  font-weight: 700;
 }
 
 /* Global Layout Wrap */
@@ -82,28 +82,27 @@ h1, h2, h3 {
   bottom: var(--footer-height);
   left: 0;
   width: 100%;
-  overflow-y: auto;
-  overflow-x: hidden;
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  overflow: hidden;
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 0 0 0.5rem 0;
-}
-
-.section-view::-webkit-scrollbar {
-  display: none;
+  padding: 2rem 0 0.5rem 0;
 }
 
 .section-content-wrapper {
   width: 100%;
-  max-width: 1200px;
+  max-width: 1210px;
   margin: 0 auto;
   padding: 0 4rem;
   min-height: min-content;
   position: relative;
   z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .section-content-wrapper {
+    padding: 0 2rem;
+  }
 }
 
 @media (max-width: 768px) {
