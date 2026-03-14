@@ -2,7 +2,7 @@
   background: rgba(17, 17, 17, 0.6);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
-  padding: 1.25rem;
+  padding: 1.15rem;
   position: relative;
   overflow: hidden;
   transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
@@ -27,6 +27,7 @@
 .stat-card:hover::before { 
   transform: scaleY(1); 
 }
-.section-label{
-  margin-top: 1rem;
+.section-label {
+  margin-top: 0 !important;
+  margin-bottom: 0.3rem !important;
 }
