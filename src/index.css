@@ -62,7 +62,7 @@ h1, h2, h3 {
   color: var(--accent);
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  margin-bottom: 2rem;
+  margin-bottom: 1rem;
   font-weight: 600;
 }
 
@@ -89,7 +89,7 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 1rem 0;
+  padding: 0 0 0.5rem 0;
 }
 
 .section-view::-webkit-scrollbar {
@@ -104,6 +104,12 @@ h1, h2, h3 {
   min-height: min-content;
   position: relative;
   z-index: 5;
+}
+
+@media (max-width: 768px) {
+  .section-content-wrapper {
+    padding: 0 1.5rem;
+  }
 }
 
 /* Global Buttons & Components */

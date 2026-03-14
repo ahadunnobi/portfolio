@@ -1,13 +1,27 @@
 .experience-item {
   display: grid;
-  grid-template-columns: 220px 1fr;
-  gap: 2.5rem;
-  padding: 1.2rem 0;
+  grid-template-columns: 180px minmax(0, 1fr);
+  gap: 1.5rem;
+  padding: 0.75rem 0;
   border-bottom: 1px solid var(--border);
+  width: 100%;
+}
+
+@media (max-width: 768px) {
+  .experience-item {
+    grid-template-columns: 1fr;
+    gap: 0.5rem;
+  }
 }
 
 .experience-item:last-child {
   border-bottom: none;
+}
+
+.experience-title {
+  text-align: center;
+  margin-bottom: 0.75rem;
+  letter-spacing: -0.02em;
 }
 
 .experience-date {
@@ -19,9 +33,9 @@
 }
 
 .experience-role {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
   font-weight: 700;
-  margin-bottom: 0.4rem;
+  margin-bottom: 0.3rem;
   color: var(--text);
 }
 

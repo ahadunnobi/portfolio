@@ -69,23 +69,31 @@ const Skills = () => {
   return (
     <div className="section-content-wrapper">
       <p className="section-label">// 02 · SKILLS</p>
-      <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', marginBottom: '2.5rem' }}>Technical Arsenal</h2>
+      <h2 className="skills-title" style={{ fontSize: 'clamp(1.6rem, 3.5vw, 2.5rem)', fontWeight: 800 }}>Technical Arsenal</h2>
       
       <div className="skills-grid">
         {skillCategories.map((category, idx) => (
-          <div key={idx} className="stat-card" style={{ padding: '2rem' }}>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.75rem', marginBottom: '1.5rem' }}>
+          <div 
+            key={idx} 
+            className={`stat-card ${idx === 3 ? 'card-professional' : ''}`} 
+            style={{ 
+              padding: '1.5rem', 
+              display: 'flex', 
+              flexDirection: 'column' 
+            }}
+          >
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.5rem' }}>
               <span style={{ color: 'var(--accent)' }}>{category.icon}</span>
-              <h3 style={{ fontSize: '1.1rem', color: 'var(--text)', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
+              <h3 style={{ fontSize: '0.9rem', color: 'var(--text)', fontWeight: '800', letterSpacing: '0.05em', textTransform: 'uppercase' }}>
                 {category.title}
               </h3>
             </div>
             
-            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.75rem' }}>
+            <div style={{ display: 'flex', flexWrap: 'wrap', gap: '0.4rem', alignItems: 'flex-start' }}>
               {category.skills.map((skill, i) => (
                 <div 
                   key={i} 
-                  className="skill-pill"
+                  className={`skill-pill ${idx === 2 ? 'skill-pill-small' : ''}`}
                   style={{ 
                     color: skill.textColor || '#fff', 
                     background: skill.color, 
