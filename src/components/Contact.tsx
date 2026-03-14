@@ -1,8 +1,11 @@
-import React from 'react'
-import { Mail, Linkedin, Github, Phone, Facebook } from 'lucide-react'
+import { useState } from 'react'
+import { Mail, Linkedin, Github, Phone, Facebook, Send } from 'lucide-react'
 import './Contact.css'
+import ContactModal from './ContactModal'
 
 const Contact = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false)
+
   const contactItems = [
     { icon: <Mail size={20} />, label: 'OFFICIAL EMAIL', value: 'info.ahadunnobi@gmail.com', href: 'mailto:info.ahadunnobi@gmail.com' },
     { icon: <Linkedin size={20} />, label: 'PROFESSIONAL HUB', value: 'linkedin.com/in/ahadunnobi', href: 'https://www.linkedin.com/in/ahadunnobi' },
@@ -18,7 +21,14 @@ const Contact = () => {
           <p className="section-label" style={{ marginBottom: '0.6rem', marginTop: '0.5rem' }}>// 05 · CONTACT</p>
           <h2 style={{ fontSize: 'clamp(1.8rem, 4.5vw, 3.2rem)', fontWeight: 800, lineHeight: 1.1, letterSpacing: '-0.03em', marginBottom: '1rem' }}>Let's build <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>together.</span></h2>
           <p style={{ fontSize: '1rem', color: 'var(--muted)', lineHeight: 1.6, marginBottom: '1.5rem', fontWeight: '400', maxWidth: '440px' }}>Open for Full-Stack opportunities and strategic technology partnerships. Engineering quality through architectural intelligence.</p>
-          <a href="mailto:info.ahadunnobi@gmail.com" className="btn-primary" style={{ padding: '0.9rem 1.8rem', fontSize: '0.85rem' }}>ESTABLISH CHANNEL</a>
+          <button 
+            onClick={() => setIsModalOpen(true)}
+            className="btn-primary" 
+            style={{ padding: '0.9rem 1.8rem', fontSize: '0.85rem', display: 'flex', alignItems: 'center', gap: '0.75rem', width: 'fit-content', border: 'none', cursor: 'pointer' }}
+          >
+            <span>ESTABLISH CHANNEL</span>
+            <Send size={18} />
+          </button>
         </div>
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.6rem' }}>
           {contactItems.map((item, i) => (
@@ -34,6 +44,11 @@ const Contact = () => {
           ))}
         </div>
       </div>
+
+      <ContactModal 
+        isOpen={isModalOpen} 
+        onClose={() => setIsModalOpen(false)} 
+      />
     </div>
   )
 }
