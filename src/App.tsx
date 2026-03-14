@@ -2,7 +2,7 @@ import { useState, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Canvas } from '@react-three/fiber'
 import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
-import { Github, Linkedin, Mail, MapPin, Instagram, Zap, Phone } from 'lucide-react'
+import { Github, Linkedin, Mail, MapPin, Instagram, Zap, Phone, Facebook } from 'lucide-react'
 import './index.css'
 
 // --- Components ---
@@ -104,6 +104,9 @@ function App() {
             <a href="https://linkedin.com/in/ahadunnobi" target="_blank"  
   
  style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Linkedin size={22} /></a>
+            <a href="https://facebook.com/ahadunnobe" target="_blank"  
+  
+ style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Facebook size={22} /></a>
             <a href="https://instagram.com/ahadunnobi" target="_blank"  
   
  style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Instagram size={22} /></a>
@@ -173,10 +176,10 @@ function App() {
             >
               <div className="section-content-wrapper">
                 <p className="section-label">// 01 · ABOUT</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', alignItems: 'start' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '3rem', alignItems: 'start' }}>
                   <div>
-                    <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', marginBottom: '2rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
-                    <div style={{ fontSize: '1.25rem', lineHeight: '1.9', color: '#b0ada6' }}>
+                    <h2 style={{ fontSize: 'clamp(2rem, 4vw, 3.5rem)', marginBottom: '1.5rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
+                    <div style={{ fontSize: '1.15rem', lineHeight: '1.8', color: '#b0ada6' }}>
                       <p style={{ marginBottom: '1rem' }}>
                         I specialize in the <strong style={{ color: 'var(--text)' }}>Modern Web Ecosystem</strong>, constructing robust platforms that prioritize performance and structural integrity. My technical philosophy is built on the belief that complex systems should feel effortless.
                       </p>
@@ -193,10 +196,10 @@ function App() {
                       { num: '06+', label: 'DEPLOYED PLATFORMS' },
                       { num: '03', label: 'ACCREDITATIONS' },
                       { num: '03', label: 'TECH SEGMENTS' },
-                      { num: 'ADJUTANT', label: 'LEADERSHIP RANK' }
+                      { num: 'SGT', label: 'LEADERSHIP RANK' }
                     ].map((stat, i) => (
-                      <div key={i} className="stat-card" style={{ padding: '1.5rem' }}>
-                        <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.5rem' }}>{stat.num}</div>
+                      <div key={i} className="stat-card" style={{ padding: '1.25rem' }}>
+                        <div style={{ fontSize: '2rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.4rem' }}>{stat.num}</div>
                         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', letterSpacing: '0.2em', fontWeight: '700' }}>{stat.label}</div>
                       </div>
                     ))}
@@ -288,7 +291,8 @@ function App() {
                       { icon: <Mail size={24} />, label: 'OFFICIAL EMAIL', value: 'info.ahadunnobi@gmail.com', href: 'mailto:info.ahadunnobi@gmail.com' },
                       { icon: <Linkedin size={24} />, label: 'PROFESSIONAL HUB', value: 'linkedin.com/in/ahadunnobi', href: 'https://www.linkedin.com/in/ahadunnobi' },
                       { icon: <Github size={24} />, label: 'VERSION CONTROL', value: 'github.com/ahadunnobi', href: 'https://github.com/ahadunnobi' },
-                      { icon: <Phone size={24} />, label: 'ESTABLISH VOICE', value: '+8801731065967', href: 'tel:+8801731065967' }
+                      { icon: <Phone size={24} />, label: 'ESTABLISH VOICE', value: '+8801731065967', href: 'tel:+8801731065967' },
+                      { icon: <Facebook size={24} />, label: 'SOCIAL BRIDGE', value: 'facebook.com/ahadunnobe', href: 'https://facebook.com/ahadunnobe' }
                     ].map((item, i) => (
                       <a key={i} href={item.href}  
   
