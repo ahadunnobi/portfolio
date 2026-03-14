@@ -1,0 +1,12 @@
+.nav-fix {
+  position: fixed;
+  top: 0;
+  width: 100%;
+  height: var(--nav-height);
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(15px);
+  border-bottom: 1px solid var(--border);
+  z-index: 1000;
+}
+
+/* Nav underline is handled via Framer Motion layoutId usually, but adding styles if needed */

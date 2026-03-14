@@ -1,0 +1,11 @@
+.hero-tag {
+  display: inline-block;
+  font-family: var(--font-mono);
+  font-size: 0.75rem;
+  color: var(--accent);
+  border: 1px solid rgba(200,240,96,0.4);
+  padding: 0.5rem 1.25rem;
+  letter-spacing: 0.2em;
+  margin-bottom: 1rem;
+  font-weight: 600;
+}

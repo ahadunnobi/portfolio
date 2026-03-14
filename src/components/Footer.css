@@ -1,0 +1,10 @@
+.footer-fix {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  height: var(--footer-height);
+  background: rgba(10, 10, 10, 0.75);
+  backdrop-filter: blur(15px);
+  border-top: 1px solid var(--border);
+  z-index: 1000;
+}

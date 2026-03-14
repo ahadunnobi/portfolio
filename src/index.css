@@ -32,14 +32,6 @@ html, body, #root {
   font-family: var(--font-body);
 }
 
-/* Background Layer */
-.bg-canvas-wrapper {
-  position: fixed;
-  inset: 0;
-  z-index: -1;
-  pointer-events: none;
-}
-
 /* Noise overlay */
 body::before {
   content: '';
@@ -49,14 +41,6 @@ body::before {
   pointer-events: none;
   z-index: 10;
   opacity: 0.2;
-}
-
-/* Fiery Particle Cursor Container */
-.cursor-canvas {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 9999;
 }
 
 .container {
@@ -82,7 +66,7 @@ h1, h2, h3 {
   font-weight: 600;
 }
 
-/* SPA Section Constraints */
+/* Global Layout Wrap */
 .spa-container {
   position: relative;
   width: 100%;
@@ -90,28 +74,6 @@ h1, h2, h3 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
-}
-
-.nav-fix {
-  position: fixed;
-  top: 0;
-  width: 100%;
-  height: var(--nav-height);
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(15px);
-  border-bottom: 1px solid var(--border);
-  z-index: 1000;
-}
-
-.footer-fix {
-  position: fixed;
-  bottom: 0;
-  width: 100%;
-  height: var(--footer-height);
-  background: rgba(10, 10, 10, 0.75);
-  backdrop-filter: blur(15px);
-  border-top: 1px solid var(--border);
-  z-index: 1000;
 }
 
 .section-view {
@@ -144,6 +106,7 @@ h1, h2, h3 {
   z-index: 5;
 }
 
+/* Global Buttons & Components */
 .btn-primary {
   font-family: var(--font-nav);
   font-size: 0.85rem;
@@ -183,82 +146,6 @@ h1, h2, h3 {
 }
 
 .btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: rgba(200,240,96,0.05); }
-
-/* Hero Specifics */
-.hero-tag {
-  display: inline-block;
-  font-family: var(--font-mono);
-  font-size: 0.75rem;
-  color: var(--accent);
-  border: 1px solid rgba(200,240,96,0.4);
-  padding: 0.5rem 1.25rem;
-  letter-spacing: 0.2em;
-  margin-bottom: 1rem;
-  font-weight: 600;
-}
-
-/* About Stats */
-.stat-card {
-  background: rgba(17, 17, 17, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  padding: 2.5rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.stat-card::before {
-  content: '';
-  position: absolute;
-  top: 0; left: 0;
-  width: 4px; height: 100%;
-  background: var(--accent);
-  transform: scaleY(0.4);
-  transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.stat-card:hover { border-color: var(--accent); transform: translateY(-5px); background: rgba(20, 20, 20, 0.8); }
-.stat-card:hover::before { transform: scaleY(1); }
-
-/* Projects */
-.project-card {
-  background: rgba(10, 10, 10, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  padding: 2.5rem;
-  position: relative;
-  overflow: hidden;
-  transition: all 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.project-card::after {
-  content: '';
-  position: absolute;
-  bottom: 0; left: 0; right: 0;
-  height: 3px;
-  background: linear-gradient(90deg, var(--accent), var(--accent2));
-  transform: scaleX(0);
-  transform-origin: left;
-  transition: transform 0.5s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.project-card:hover { transform: translateY(-8px); border-color: #444; background: rgba(14, 14, 14, 0.9); }
-.project-card:hover::after { transform: scaleX(1); }
-
-/* Contact Links */
-.contact-link {
-  display: flex;
-  align-items: center;
-  gap: 1.5rem;
-  text-decoration: none;
-  color: var(--text);
-  padding: 1.5rem 2rem;
-  background: rgba(10, 10, 10, 0.6);
-  backdrop-filter: blur(10px);
-  border: 1px solid var(--border);
-  font-family: var(--font-nav);
-  font-size: 0.9rem;
-  letter-spacing: 0.05em;
-  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
-}
-.contact-link:hover { border-color: var(--accent); transform: translateX(10px); background: rgba(200,240,96,0.03); }
 
 ::selection {
   background: var(--accent);

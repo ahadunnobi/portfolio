@@ -1,0 +1,21 @@
+.contact-link {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  text-decoration: none;
+  color: var(--text);
+  padding: 1.5rem 2rem;
+  background: rgba(10, 10, 10, 0.6);
+  backdrop-filter: blur(10px);
+  border: 1px solid var(--border);
+  font-family: var(--font-nav);
+  font-size: 0.9rem;
+  letter-spacing: 0.05em;
+  transition: all 0.3s cubic-bezier(0.23, 1, 0.32, 1);
+}
+
+.contact-link:hover { 
+  border-color: var(--accent); 
+  transform: translateX(10px); 
+  background: rgba(200,240,96,0.03); 
+}
