@@ -1,8 +1,8 @@
-import { useState, useEffect, useRef, Suspense } from 'react'
+import { useState, Suspense } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import { Canvas } from '@react-three/fiber'
 import { Float, MeshDistortMaterial, Stars } from '@react-three/drei'
-import { Github, Linkedin, Mail, MapPin, Globe, Instagram, Zap } from 'lucide-react'
+import { Github, Linkedin, Mail, MapPin, Instagram, Zap, Phone } from 'lucide-react'
 import './index.css'
 
 // --- Components ---
@@ -34,90 +34,6 @@ const Background = () => {
   )
 }
 
-const FieryCursor = () => {
-  const canvasRef = useRef<HTMLCanvasElement>(null)
-  const mousePos = useRef({ x: 0, y: 0 })
-  const particles = useRef<any[]>([])
-
-  useEffect(() => {
-    const canvas = canvasRef.current
-    if (!canvas) return
-    const ctx = canvas.getContext('2d')
-    if (!ctx) return
-
-    const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY }
-    }
-
-    const handleResize = () => {
-      canvas.width = window.innerWidth
-      canvas.height = window.innerHeight
-    }
-
-    window.addEventListener('mousemove', handleMouseMove)
-    window.addEventListener('resize', handleResize)
-    handleResize()
-
-    let animationFrameId: number
-
-    const createParticle = (x: number, y: number) => {
-      const angle = Math.random() * Math.PI * 2
-      const speed = Math.random() * 2 + 1
-      return {
-        x,
-        y,
-        vx: Math.cos(angle) * speed,
-        vy: Math.sin(angle) * speed - 1.5,
-        life: 0,
-        maxLife: Math.random() * 40 + 20,
-        size: Math.random() * 3 + 1.5,
-        color: `hsla(${Math.random() * 30 + 55}, 100%, 70%, 1)` // Yellow-green range
-      }
-    }
-
-    const render = () => {
-      ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-      if (mousePos.current.x !== 0) {
-        for (let i = 0; i < 4; i++) {
-          particles.current.push(createParticle(mousePos.current.x, mousePos.current.y))
-        }
-      }
-
-      particles.current = particles.current.filter((p) => {
-        p.x += p.vx
-        p.y += p.vy
-        p.life++
-        
-        const opacity = 1 - p.life / p.maxLife
-        const currentSize = p.size * opacity
-
-        ctx.beginPath()
-        ctx.arc(p.x, p.y, currentSize, 0, Math.PI * 2)
-        ctx.fillStyle = p.color.replace('1)', `${opacity})`)
-        ctx.fill()
-
-        // Glow effect
-        ctx.shadowBlur = 15;
-        ctx.shadowColor = p.color;
-
-        return p.life < p.maxLife
-      })
-
-      animationFrameId = requestAnimationFrame(render)
-    }
-
-    render()
-
-    return () => {
-      window.removeEventListener('mousemove', handleMouseMove)
-      window.removeEventListener('resize', handleResize)
-      cancelAnimationFrame(animationFrameId)
-    }
-  }, [])
-
-  return <canvas ref={canvasRef} className="cursor-canvas" />
-}
 
 const sectionVariants = {
   initial: { opacity: 0, y: 30 },
@@ -140,7 +56,6 @@ function App() {
   return (
     <div className="spa-container">
       <Background />
-      <FieryCursor />
 
       {/* Navigation */}
       <nav className="nav-fix">
@@ -192,9 +107,6 @@ function App() {
             <a href="https://instagram.com/ahadunnobi" target="_blank"  
   
  style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Instagram size={22} /></a>
-            <a href="https://ahadven.netlify.app" target="_blank"  
-  
- style={{ color: 'var(--muted)', transition: 'color 0.4s' }}><Globe size={22} /></a>
           </div>
         </div>
       </nav>
@@ -261,14 +173,14 @@ function App() {
             >
               <div className="section-content-wrapper">
                 <p className="section-label">// 01 · ABOUT</p>
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '9rem', alignItems: 'start' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', alignItems: 'start' }}>
                   <div>
-                    <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', marginBottom: '4.5rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
+                    <h2 style={{ fontSize: 'clamp(2.5rem, 4.5vw, 4.2rem)', marginBottom: '2rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
                     <div style={{ fontSize: '1.25rem', lineHeight: '1.9', color: '#b0ada6' }}>
-                      <p style={{ marginBottom: '2rem' }}>
+                      <p style={{ marginBottom: '1rem' }}>
                         I specialize in the <strong style={{ color: 'var(--text)' }}>Modern Web Ecosystem</strong>, constructing robust platforms that prioritize performance and structural integrity. My technical philosophy is built on the belief that complex systems should feel effortless.
                       </p>
-                      <p style={{ marginBottom: '2rem' }}>
+                      <p style={{ marginBottom: '1rem' }}>
                         Applying first-principles thinking from my philosophical background, I don't just write scripts; I design architectures that solve fundamental problems with mathematical precision.
                       </p>
                       <p>
@@ -276,15 +188,15 @@ function App() {
                       </p>
                     </div>
                   </div>
-                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '3rem' }}>
+                  <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
                     {[
                       { num: '06+', label: 'DEPLOYED PLATFORMS' },
                       { num: '03', label: 'ACCREDITATIONS' },
                       { num: '03', label: 'TECH SEGMENTS' },
-                      { num: 'SGT', label: 'LEADERSHIP RANK' }
+                      { num: 'ADJUTANT', label: 'LEADERSHIP RANK' }
                     ].map((stat, i) => (
-                      <div key={i} className="stat-card">
-                        <div style={{ fontSize: '3rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.7rem' }}>{stat.num}</div>
+                      <div key={i} className="stat-card" style={{ padding: '1.5rem' }}>
+                        <div style={{ fontSize: '2.5rem', fontWeight: 800, color: 'var(--accent)', lineHeight: 1, marginBottom: '0.5rem' }}>{stat.num}</div>
                         <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.85rem', color: 'var(--muted)', letterSpacing: '0.2em', fontWeight: '700' }}>{stat.label}</div>
                       </div>
                     ))}
@@ -302,14 +214,14 @@ function App() {
             >
               <div className="section-content-wrapper" style={{ maxWidth: '1100px' }}>
                 <p className="section-label">// 03 · EXPERIENCE</p>
-                <h2 style={{ fontSize: ' clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '5rem' }}>Professional Record</h2>
-                <div style={{ display: 'flex', flexDirection: 'column', gap: '1.5rem' }}>
+                <h2 style={{ fontSize: ' clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '2rem' }}>Professional Record</h2>
+                <div style={{ display: 'flex', flexDirection: 'column', gap: '1rem' }}>
                   {[
                     { date: 'MAY 2024 – DEC 2025', role: 'Billing Executive', company: 'LAZZ PHARMA · FULL-TIME', desc: 'Managed high-concurrency digital billing operations and pharmaceutical inventory tracking, maintaining 100% data integrity.' },
                     { date: 'FEB 2022 – FEB 2025', role: 'Cadet Sergeant', company: 'BNCC ARMY WING', desc: 'Commanded platoon exercises and operational logistics as a high-ranking cadet officer, overseeing strategic leadership training.' },
                     { date: 'NOV 2019 – JAN 2022', role: 'ICT Consultant', company: 'SCIENCE EXPLORER', desc: 'Formulated digital education strategies and managed cloud infrastructure for high-scale localized platforms.' }
                   ].map((exp, i) => (
-                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '6rem', padding: '4rem 0', borderBottom: i === 2 ? 'none' : '1px solid var(--border)' }}>
+                    <div key={i} style={{ display: 'grid', gridTemplateColumns: '260px 1fr', gap: '3rem', padding: '2rem 0', borderBottom: i === 2 ? 'none' : '1px solid var(--border)' }}>
                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.95rem', color: 'var(--muted)', letterSpacing: '0.15em', fontWeight: '700' }}>{exp.date}</div>
                       <div>
                         <div style={{ fontSize: '1.8rem', fontWeight: 700, marginBottom: '0.7rem', color: 'var(--text)' }}>{exp.role}</div>
@@ -331,8 +243,8 @@ function App() {
             >
               <div className="section-content-wrapper">
                 <p className="section-label">// 04 · PROJECTS</p>
-                <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '5rem' }}>Strategic Builds</h2>
-                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '3rem' }}>
+                <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', marginBottom: '2rem' }}>Strategic Builds</h2>
+                <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1.5rem' }}>
                   {[
                     { title: 'Cloud Command System', tag: 'NODE.JS · 2026', img: '/assets/project-dev-command.png', stack: ['React', 'Node.js', 'MongoDB'] },
                     { title: 'Global Issue Tracker', tag: 'TYPESCRIPT · 2025', img: '/assets/project-github-issues.png', stack: ['Express', 'RESTful API', 'Vite'] },
@@ -341,15 +253,13 @@ function App() {
                     <div key={i} className="project-card">
                       <div style={{ fontFamily: 'var(--font-mono)', fontSize: '0.75rem', color: 'var(--accent2)', letterSpacing: '0.2em', border: '1px solid rgba(96,240,200,0.3)', padding: '0.5rem 1rem', display: 'inline-block', marginBottom: '2rem', fontWeight: '700' }}>{proj.tag}</div>
                       <h3 style={{ fontSize: '1.7rem', marginBottom: '2rem' }}>{proj.title}</h3>
-                      <div style={{ width: '100%', height: '220px', background: 'var(--surface2)', marginBottom: '2.5rem', overflow: 'hidden', border: '1px solid var(--border)' }}>
+                      <div style={{ width: '100%', height: '160px', background: 'var(--surface2)', marginBottom: '1.5rem', overflow: 'hidden', border: '1px solid var(--border)' }}>
                         <img src={proj.img} alt={proj.title} style={{ width: '100%', height: '100%', objectFit: 'cover', opacity: 0.9, transition: 'all 0.6s cubic-bezier(0.23, 1, 0.32, 1)' }} onMouseEnter={e => e.currentTarget.style.transform = 'scale(1.1)'} onMouseLeave={e => e.currentTarget.style.transform = 'scale(1)'} />
                       </div>
                       <div style={{ display: 'flex', gap: '0.8rem', marginBottom: '2.5rem', flexWrap: 'wrap' }}>
                          {proj.stack.map(s => <span key={s} style={{ fontFamily: 'var(--font-mono)', fontSize: '0.8rem', color: 'var(--muted)', background: 'var(--surface2)', padding: '0.5rem 1rem', fontWeight: '600' }}>{s}</span>)}
                       </div>
-                      <a href="#"  
-  
- className="btn-ghost" style={{ padding: '1rem 2rem', fontSize: '0.9rem', width: '100%', justifyContent: 'center' }}>CASE ANALYSIS →</a>
+                      <a href="#" className="btn-ghost" style={{ padding: '0.8rem 1.5rem', fontSize: '0.85rem', width: '100%', justifyContent: 'center' }}>CASE ANALYSIS →</a>
                     </div>
                   ))}
                 </div>
@@ -364,11 +274,11 @@ function App() {
               {...sectionVariants}
             >
               <div className="section-content-wrapper">
-                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '10rem', alignItems: 'center' }}>
+                <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '4rem', alignItems: 'center' }}>
                   <div>
                     <p className="section-label">// 06 · CONTACT</p>
-                    <h2 style={{ fontSize: 'clamp(3rem, 6vw, 5.5rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em', marginBottom: '3.5rem' }}>Let's<br />build<br /><span style={{ color: 'var(--accent)' }}>together.</span></h2>
-                    <p style={{ fontSize: '1.3rem', color: 'var(--muted)', lineHeight: 1.85, marginBottom: '4rem', fontWeight: '400', maxWidth: '520px' }}>Open for Full-Stack opportunities and strategic technology partnerships. Engineering quality through architectural intelligence.</p>
+                    <h2 style={{ fontSize: 'clamp(2.5rem, 5vw, 4.5rem)', fontWeight: 800, lineHeight: 1, letterSpacing: '-0.05em', marginBottom: '1.5rem' }}>Let's<br />build<br /><span style={{ color: 'var(--accent)' }}>together.</span></h2>
+                    <p style={{ fontSize: '1.15rem', color: 'var(--muted)', lineHeight: 1.7, marginBottom: '2rem', fontWeight: '400', maxWidth: '480px' }}>Open for Full-Stack opportunities and strategic technology partnerships. Engineering quality through architectural intelligence.</p>
                     <a href="mailto:info.ahadunnobi@gmail.com"  
   
  className="btn-primary">ESTABLISH CHANNEL</a>
@@ -377,7 +287,8 @@ function App() {
                     {[
                       { icon: <Mail size={24} />, label: 'OFFICIAL EMAIL', value: 'info.ahadunnobi@gmail.com', href: 'mailto:info.ahadunnobi@gmail.com' },
                       { icon: <Linkedin size={24} />, label: 'PROFESSIONAL HUB', value: 'linkedin.com/in/ahadunnobi', href: 'https://www.linkedin.com/in/ahadunnobi' },
-                      { icon: <Globe size={24} />, label: 'DIGITAL DOMAIN', value: 'ahadven.netlify.app', href: 'https://ahadven.netlify.app' }
+                      { icon: <Github size={24} />, label: 'VERSION CONTROL', value: 'github.com/ahadunnobi', href: 'https://github.com/ahadunnobi' },
+                      { icon: <Phone size={24} />, label: 'ESTABLISH VOICE', value: '+8801731065967', href: 'tel:+8801731065967' }
                     ].map((item, i) => (
                       <a key={i} href={item.href}  
   
