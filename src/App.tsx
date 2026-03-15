@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import './index.css'
 
@@ -22,6 +22,37 @@ const sectionVariants = {
 function App() {
   const [activeSection, setActiveSection] = useState('hero')
 
+  useEffect(() => {
+    // Cursor
+    const cursor = document.getElementById('cursor');
+    const ring = document.getElementById('cursorRing');
+    if (!cursor || !ring) return;
+
+    let mx = 0, my = 0, rx = 0, ry = 0;
+    const moveCursor = (e: MouseEvent) => {
+      mx = e.clientX;
+      my = e.clientY;
+      cursor.style.left = mx + 'px';
+      cursor.style.top = my + 'px';
+    };
+
+    document.addEventListener('mousemove', moveCursor);
+
+    function animateRing() {
+      if (!ring) return;
+      rx += (mx - rx) * 0.12;
+      ry += (my - ry) * 0.12;
+      ring.style.left = rx + 'px';
+      ring.style.top = ry + 'px';
+      requestAnimationFrame(animateRing);
+    }
+    animateRing();
+
+    return () => {
+      document.removeEventListener('mousemove', moveCursor);
+    };
+  }, []);
+
   const sections = [
     { id: 'hero', label: 'Home' },
     { id: 'about', label: 'About' },
@@ -33,6 +64,8 @@ function App() {
 
   return (
     <div className="spa-container">
+      <div id="cursor"></div>
+      <div id="cursorRing"></div>
       <Background />
 
       <Navbar 
