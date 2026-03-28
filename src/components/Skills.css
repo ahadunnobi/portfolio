@@ -19,8 +19,8 @@
 
 @media (max-width: 640px) {
   .skills-grid {
-    grid-template-columns: repeat(2, 1fr); /* Keep 2 cols on mobile for compactness */
-    gap: 0.5rem;
+    grid-template-columns: 1fr; /* Switched to 1 column for vertical scrolling */
+    gap: 1rem; /* Increased gap for better vertical breathing room */
   }
   
   .skill-pill {

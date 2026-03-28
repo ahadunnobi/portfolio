@@ -48,20 +48,41 @@
 
 @media (max-width: 768px) {
   .about-grid {
-    grid-template-columns: 1fr;
+    display: flex;
+    flex-direction: column-reverse;
     gap: 1.5rem;
+    padding: 0 1.5rem; /* Aggressive side buffer to guarantee no overlap */
   }
   
   .about-grid h2 {
-    font-size: 1.5rem !important;
+    font-size: 1.2rem !important; /* Decreased further */
     margin-bottom: 0.5rem !important;
+    text-align: center;
+    padding: 0 1rem; /* Local squeeze */
   }
   
-  .about-grid div {
-    font-size: 0.85rem !important;
+  .about-grid > div:first-child > div {
+    font-size: 0.75rem !important;
+    text-align: center;
+    padding: 0 0.5rem;
   }
 
   .stats-grid {
     gap: 0.75rem;
+  }
+
+  .stat-card {
+    padding: 0.85rem !important; /* Physically shrink the card */
+  }
+
+  .stat-card > div:first-child {
+    font-size: 1.4rem !important; /* Shrink the statistic number */
+    margin-bottom: 0.25rem !important;
+  }
+
+  .stat-card > div:last-child {
+    font-size: 0.6rem !important; /* Shrink the label a tiny bit more */
+    letter-spacing: 0.05em !important; /* Reduce tracking significantly for long words */
+    word-break: break-word; /* Ensure it breaks rather than spilling out */
   }
 }
