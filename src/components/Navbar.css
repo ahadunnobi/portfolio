@@ -54,42 +54,29 @@
     align-items: center;
   }
 
-  .mobile-brand-link {
-    writing-mode: vertical-rl;
-    text-orientation: upright;
-    color: var(--accent);
-    font-family: var(--font-head);
-    font-weight: 800;
-    font-size: 0.8rem;
-    letter-spacing: -0.1em;
-    cursor: pointer;
-    margin-bottom: 1rem;
-  }
-
   .aside-nav-item {
     background: none;
     border: none;
     color: var(--muted);
-    font-family: var(--font-mono);
-    font-size: 0.55rem;
-    writing-mode: vertical-rl;
-    text-orientation: upright;
     cursor: pointer;
-    text-transform: uppercase;
-    letter-spacing: -0.1em;
     transition: all 0.3s ease;
-    padding: 0.4rem 0;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .aside-nav-item.active {
     color: var(--accent);
-    font-weight: 700;
   }
 
   .aside-social-link {
     color: var(--muted);
     transition: all 0.3s ease;
-    padding: 0.5rem;
+    padding: 0.6rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
   }
 
   .aside-social-link:hover {

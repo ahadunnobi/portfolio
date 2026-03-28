@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { Github, Linkedin, Facebook, Instagram } from 'lucide-react'
+import { Github, Linkedin, Facebook, Instagram, Home, Info, Code2, Briefcase, Folder, Mail } from 'lucide-react'
 import './Navbar.css'
 
 interface NavbarProps {
@@ -9,6 +9,18 @@ interface NavbarProps {
 }
 
 const Navbar = ({ activeSection, setActiveSection, sections }: NavbarProps) => {
+  const getIcon = (id: string, size = 18) => {
+    switch (id) {
+      case 'hero': return <Home size={size} />;
+      case 'about': return <Info size={size} />;
+      case 'skills': return <Code2 size={size} />;
+      case 'experience': return <Briefcase size={size} />;
+      case 'projects': return <Folder size={size} />;
+      case 'contact': return <Mail size={size} />;
+      default: return null;
+    }
+  };
+
   return (
     <>
       <nav className="nav-fix">
@@ -63,22 +75,21 @@ const Navbar = ({ activeSection, setActiveSection, sections }: NavbarProps) => {
       {/* Mobile Aside Navigation */}
       <div className="mobile-asides">
         <div className="aside-left">
-          <div className="mobile-brand-link" onClick={() => setActiveSection('hero')}>AHAD</div>
-          {sections.slice(1).map(section => (
+          {sections.map(section => (
             <button
               key={section.id}
               onClick={() => setActiveSection(section.id)}
               className={`aside-nav-item ${activeSection === section.id ? 'active' : ''}`}
             >
-              {section.label.toUpperCase()}
+              {getIcon(section.id, 20)}
             </button>
           ))}
         </div>
         <div className="aside-right">
-          <a href="https://github.com/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Github size={18} /></a>
-          <a href="https://linkedin.com/in/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Linkedin size={18} /></a>
-          <a href="https://instagram.com/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Instagram size={18} /></a>
-          <a href="https://facebook.com/ahadunnobe" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Facebook size={18} /></a>
+          <a href="https://github.com/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Github size={20} /></a>
+          <a href="https://linkedin.com/in/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Linkedin size={20} /></a>
+          <a href="https://instagram.com/ahadunnobi" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Instagram size={20} /></a>
+          <a href="https://facebook.com/ahadunnobe" target="_blank" rel="noopener noreferrer" className="aside-social-link"><Facebook size={20} /></a>
         </div>
       </div>
     </>
