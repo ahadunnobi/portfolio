@@ -9,4 +9,92 @@
   z-index: 1000;
 }
 
-/* Nav underline is handled via Framer Motion layoutId usually, but adding styles if needed */
+@media (max-width: 768px) {
+  .nav-fix {
+    display: none !important;
+  }
+
+  .mobile-asides {
+    display: flex;
+    justify-content: space-between;
+    position: fixed;
+    top: 50%;
+    left: 0;
+    right: 0;
+    transform: translateY(-50%);
+    pointer-events: none;
+    z-index: 1000;
+    width: 100%;
+    height: auto;
+  }
+
+  .aside-left, .aside-right {
+    pointer-events: auto;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1.5rem;
+    padding: 1.5rem 0.5rem;
+    background: rgba(10, 10, 10, 0.4);
+    backdrop-filter: blur(8px);
+    border: 1px solid var(--border);
+    height: fit-content;
+    max-height: 80vh;
+  }
+
+  .aside-left {
+    border-left: none;
+    border-radius: 0 12px 12px 0;
+    align-items: center;
+  }
+
+  .aside-right {
+    border-right: none;
+    border-radius: 12px 0 0 12px;
+    align-items: center;
+  }
+
+  .mobile-brand-link {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    color: var(--accent);
+    font-family: var(--font-head);
+    font-weight: 800;
+    font-size: 0.8rem;
+    letter-spacing: 0.2em;
+    cursor: pointer;
+    margin-bottom: 1rem;
+  }
+
+  .aside-nav-item {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+    transform: rotate(180deg);
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    transition: all 0.3s ease;
+    padding: 0.5rem 0;
+  }
+
+  .aside-nav-item.active {
+    color: var(--accent);
+    font-weight: 700;
+  }
+
+  .aside-social-link {
+    color: var(--muted);
+    transition: all 0.3s ease;
+    padding: 0.5rem;
+  }
+
+  .aside-social-link:hover {
+    color: var(--accent);
+  }
+}
