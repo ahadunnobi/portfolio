@@ -43,7 +43,7 @@ const Hero = ({ setActiveSection }: HeroProps) => {
             />
             <div className="profile-outline"></div>
             <div className="desktop-tag">
-              FULL-STACK ENGINEER
+              FULL-STACK DEVELOPER
             </div>
           </div>
         </div>
@@ -66,7 +66,6 @@ const Hero = ({ setActiveSection }: HeroProps) => {
               alt="Ahadun Nobi" 
               className="profile-img-mobile"
             />
-            <div className="mobile-engineer-tag">FULL-STACK ENGINEER</div>
           </div>
         </div>
 
@@ -74,6 +73,8 @@ const Hero = ({ setActiveSection }: HeroProps) => {
           <h1 className="hero-title-mobile">
             Ahadun <span style={{ color: 'var(--accent)' }}>Nobi</span>
           </h1>
+
+          <div className="mobile-engineer-tag">FULL-STACK DEVELOPER</div>
 
           <p className="hero-desc-mobile">
             Full-Stack Architect scaling professional digital solutions with <span style={{ color: 'var(--text)' }}>React, Node.js, Express, and MongoDB</span>.

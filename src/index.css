@@ -140,8 +140,8 @@ h1, h2, h3 {
     bottom: auto;
     height: auto;
     min-height: 100vh;
-    padding: 0; 
-    align-items: flex-start; /* Start content from the top explicitly */
+    padding: 0 0 var(--footer-height) 0; 
+    align-items: center; /* Center content vertically if screen is taller than content */
   }
 }
 

@@ -126,7 +126,7 @@
     /* Stack layout: Height is natural, content starts from top */
     height: auto; 
     justify-content: flex-start; 
-    padding: 3rem 0 5rem 0; /* Deliberate top gap from menu, bottom padding for scroll */
+    padding: 2rem 0; /* Let flex naturally center it, provide baseline scrolling padding */
     gap: 1.5rem; /* Consistent spacing between top/middle/bottom blocks */
   }
 
@@ -172,8 +172,8 @@
 
   .profile-wrapper-mobile {
     position: relative;
-    width: 250px; /* Strong visual presence */
-    height: 330px;
+    width: 215px; /* Shrunk down to avoid side menu overlap securely */
+    height: 285px;
     z-index: 2;
   }
 
@@ -193,10 +193,7 @@
   }
 
   .mobile-engineer-tag {
-    position: absolute;
-    bottom: -1px; /* Precision overlap */
-    left: 50%;
-    transform: translateX(-50%);
+    /* Changed from absolute overlay to normal inline-block layout underneath name */
     background: var(--accent);
     color: #0a0a0a;
     font-family: var(--font-mono);
@@ -206,6 +203,7 @@
     letter-spacing: 0.05em;
     white-space: nowrap;
     z-index: 3;
+    margin-bottom: 0.75rem; /* Gap between tag and description */
   }
 
   .hero-mobile-bottom {
@@ -219,7 +217,7 @@
     font-size: 2.2rem;
     line-height: 1.1;
     font-weight: 800;
-    margin-bottom: 0.25rem;
+    margin-bottom: 0.25rem; /* Tighter gap to the tag below it */
   }
 
   .hero-desc-mobile {
