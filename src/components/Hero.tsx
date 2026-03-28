@@ -8,9 +8,10 @@ interface HeroProps {
 const Hero = ({ setActiveSection }: HeroProps) => {
   return (
     <div className="section-content-wrapper">
-      <div className="hero-grid">
+      {/* Desktop Layout */}
+      <div className="hero-grid desktop-only-flex">
         <div className="hero-text-side">
-          <div className="hero-tag-wrap desktop-only">
+          <div className="hero-tag-wrap">
             <div className="hero-tag">OPEN FOR COLLABORATION</div>
           </div>
           <h1 className="hero-title">
@@ -35,21 +36,48 @@ const Hero = ({ setActiveSection }: HeroProps) => {
 
         <div className="hero-image-side">
           <div className="profile-wrapper">
-            {/* Mobile Tags */}
-            <div className="mobile-tag top-left">OPEN FOR COLLABORATION</div>
-            <div className="mobile-tag top-right">FULL-STACK ENGINEER</div>
-            
             <img 
               src="/assets/profile.png" 
               alt="Ahadun Nobi" 
               className="profile-img"
             />
             <div className="profile-outline"></div>
-            
-            {/* Desktop Tag */}
-            <div className="desktop-tag desktop-only">
+            <div className="desktop-tag">
               FULL-STACK ENGINEER
             </div>
+          </div>
+        </div>
+      </div>
+
+      {/* Mobile Precision Layout */}
+      <div className="hero-mobile-precision mobile-only-flex">
+        <div className="mobile-collab-tag">OPEN FOR COLLABORATION</div>
+        
+        <div className="profile-wrapper-mobile">
+          <img 
+            src="/assets/profile.png" 
+            alt="Ahadun Nobi" 
+            className="profile-img-mobile"
+          />
+          <div className="profile-outline-mobile"></div>
+        </div>
+
+        <div className="mobile-engineer-tag">FULL-STACK ENGINEER</div>
+
+        <h1 className="hero-title-mobile">
+          Ahadun <span style={{ color: 'var(--accent)' }}>Nobi</span>
+        </h1>
+
+        <p className="hero-desc-mobile">
+          Full-Stack Architect scaling professional digital solutions with <span style={{ color: 'var(--text)' }}>React, Node.js, Express, and MongoDB</span>.
+        </p>
+
+        <div className="hero-stats-mobile">
+          <div className="hero-stat-item-mobile">
+            <MapPin size={16} style={{ color: 'var(--accent)' }} /> Chattogram, BD
+          </div>
+          <div className="hero-stat-item-mobile">
+            <Zap size={16} style={{ color: 'var(--accent)' }} /> PH Batch 13
           </div>
         </div>
       </div>
