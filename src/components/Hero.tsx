@@ -51,38 +51,41 @@ const Hero = ({ setActiveSection }: HeroProps) => {
 
       {/* Mobile Precision Layout */}
       <div className="hero-mobile-precision mobile-only-flex">
-        <div className="mobile-typing-wrap">
-          <span className="typing-text">SYSTEM.INITIALIZED // AHADUN_NOBI</span>
-          <span className="typing-cursor">_</span>
-        </div>
-
-        <div className="mobile-collab-tag">OPEN FOR COLLABORATION</div>
-        
-        <div className="profile-wrapper-mobile">
-          <img 
-            src="/assets/profile.png" 
-            alt="Ahadun Nobi" 
-            className="profile-img-mobile"
-          />
-          <div className="profile-outline-mobile"></div>
-        </div>
-
-        <div className="mobile-engineer-tag">FULL-STACK ENGINEER</div>
-
-        <h1 className="hero-title-mobile">
-          Ahadun <span style={{ color: 'var(--accent)' }}>Nobi</span>
-        </h1>
-
-        <p className="hero-desc-mobile">
-          Full-Stack Architect scaling professional digital solutions with <span style={{ color: 'var(--text)' }}>React, Node.js, Express, and MongoDB</span>.
-        </p>
-
-        <div className="hero-stats-mobile">
-          <div className="hero-stat-item-mobile">
-            <MapPin size={16} style={{ color: 'var(--accent)' }} /> Chattogram, BD
+        <div className="hero-mobile-top">
+          <div className="mobile-typing-wrap">
+            <span className="typing-text">SYSTEM.INITIALIZED // AHADUN_NOBI</span>
+            <span className="typing-cursor">_</span>
           </div>
-          <div className="hero-stat-item-mobile">
-            <Zap size={16} style={{ color: 'var(--accent)' }} /> PH Batch 13
+          <div className="mobile-collab-tag">OPEN FOR COLLABORATION</div>
+        </div>
+        
+        <div className="hero-mobile-middle">
+          <div className="profile-wrapper-mobile">
+            <img 
+              src="/assets/profile.png" 
+              alt="Ahadun Nobi" 
+              className="profile-img-mobile"
+            />
+            <div className="mobile-engineer-tag">FULL-STACK ENGINEER</div>
+          </div>
+        </div>
+
+        <div className="hero-mobile-bottom">
+          <h1 className="hero-title-mobile">
+            Ahadun <span style={{ color: 'var(--accent)' }}>Nobi</span>
+          </h1>
+
+          <p className="hero-desc-mobile">
+            Full-Stack Architect scaling professional digital solutions with <span style={{ color: 'var(--text)' }}>React, Node.js, Express, and MongoDB</span>.
+          </p>
+
+          <div className="hero-stats-mobile">
+            <div className="hero-stat-item-mobile">
+              <MapPin size={14} style={{ color: 'var(--accent)' }} /> Chattogram, BD
+            </div>
+            <div className="hero-stat-item-mobile">
+              <Zap size={14} style={{ color: 'var(--accent)' }} /> PH Batch 13
+            </div>
           </div>
         </div>
       </div>

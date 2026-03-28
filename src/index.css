@@ -97,8 +97,9 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
   body, #root {
-    overflow: hidden;
-    height: 100vh;
+    /* Removed overflow: hidden and fixed height to allow natural scrolling */
+    height: auto;
+    min-height: 100%;
   }
 }
 
@@ -110,6 +111,14 @@ h1, h2, h3 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .spa-container {
+    height: auto;
+    min-height: 100vh;
+    overflow: visible; /* Allow content to scroll */
+  }
 }
 
 .section-view {
@@ -126,11 +135,13 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
   .section-view {
-    position: absolute;
+    position: relative; /* Change from absolute to relative flow */
     top: 0;
-    bottom: 0;
-    height: 100vh;
-    padding: 0; /* Remove padding for top-to-bottom filling */
+    bottom: auto;
+    height: auto;
+    min-height: 100vh;
+    padding: 0; 
+    align-items: flex-start; /* Start content from the top explicitly */
   }
 }
 
@@ -146,7 +157,7 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
   .section-content-wrapper {
-    padding: 0 1rem; /* Aggressive side filling */
+    padding: 0 2rem;
   }
 }
 
