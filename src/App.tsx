@@ -38,18 +38,20 @@ function App() {
 
     document.addEventListener('mousemove', moveCursor);
 
+    let animRef: number;
     function animateRing() {
       if (!ring) return;
       rx += (mx - rx) * 0.12;
       ry += (my - ry) * 0.12;
       ring.style.left = rx + 'px';
       ring.style.top = ry + 'px';
-      requestAnimationFrame(animateRing);
+      animRef = requestAnimationFrame(animateRing);
     }
     animateRing();
 
     return () => {
       document.removeEventListener('mousemove', moveCursor);
+      cancelAnimationFrame(animRef);
     };
   }, []);
 

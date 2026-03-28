@@ -4,7 +4,7 @@ const About = () => {
   return (
     <div className="section-content-wrapper">
       <p className="section-label">// 01 · ABOUT</p>
-      <div style={{ display: 'grid', gridTemplateColumns: '1.2fr 1fr', gap: '1.5rem', alignItems: 'center', marginTop: '0' }}>
+      <div className="about-grid">
         <div>
           <h2 style={{ fontSize: 'clamp(1.8rem, 3.5vw, 3rem)', marginBottom: '0.75rem', lineHeight: 1.1 }}>Engineering logic<br />with <span style={{ color: 'var(--accent)', fontStyle: 'italic' }}>human intent</span>.</h2>
           <div style={{ fontSize: '1rem', lineHeight: '1.6', color: '#b0ada6' }}>
@@ -19,7 +19,7 @@ const About = () => {
             </p>
           </div>
         </div>
-        <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+        <div className="stats-grid">
           {[
             { num: '06+', label: 'DEPLOYED PLATFORMS' },
             { num: '03', label: 'ACCREDITATIONS' },

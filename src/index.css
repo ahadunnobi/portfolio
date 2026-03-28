@@ -89,6 +89,14 @@ h1, h2, h3 {
   font-weight: 700;
 }
 
+@media (max-width: 768px) {
+  body, #root {
+    overflow: auto;
+    height: auto;
+    min-height: 100vh;
+  }
+}
+
 /* Global Layout Wrap */
 .spa-container {
   position: relative;
@@ -97,6 +105,13 @@ h1, h2, h3 {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+}
+
+@media (max-width: 768px) {
+  .spa-container {
+    height: auto;
+    overflow: visible;
+  }
 }
 
 .section-view {
@@ -112,6 +127,18 @@ h1, h2, h3 {
   padding: 2rem 0 0.5rem 0;
 }
 
+@media (max-width: 768px) {
+  .section-view {
+    position: relative;
+    top: 0;
+    bottom: 0;
+    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
+    height: auto;
+    overflow: visible;
+    padding: 2.5rem 0;
+  }
+}
+
 .section-content-wrapper {
   width: 100%;
   max-width: 1210px;
@@ -120,12 +147,6 @@ h1, h2, h3 {
   min-height: min-content;
   position: relative;
   z-index: 5;
-}
-
-@media (max-width: 768px) {
-  .section-content-wrapper {
-    padding: 0 2rem;
-  }
 }
 
 @media (max-width: 768px) {
