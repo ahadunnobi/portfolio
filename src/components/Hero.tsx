@@ -51,6 +51,11 @@ const Hero = ({ setActiveSection }: HeroProps) => {
 
       {/* Mobile Precision Layout */}
       <div className="hero-mobile-precision mobile-only-flex">
+        <div className="mobile-typing-wrap">
+          <span className="typing-text">SYSTEM.INITIALIZED // AHADUN_NOBI</span>
+          <span className="typing-cursor">_</span>
+        </div>
+
         <div className="mobile-collab-tag">OPEN FOR COLLABORATION</div>
         
         <div className="profile-wrapper-mobile">

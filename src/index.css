@@ -130,7 +130,7 @@ h1, h2, h3 {
     top: 0;
     bottom: 0;
     height: 100vh;
-    padding: 1.5rem 0;
+    padding: 0; /* Remove padding for top-to-bottom filling */
   }
 }
 
@@ -146,7 +146,7 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
   .section-content-wrapper {
-    padding: 0 2.5rem;
+    padding: 0 1rem; /* Aggressive side filling */
   }
 }
 
