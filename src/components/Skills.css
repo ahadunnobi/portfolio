@@ -19,8 +19,18 @@
 
 @media (max-width: 640px) {
   .skills-grid {
-    grid-template-columns: 1fr;
-    grid-auto-rows: auto;
+    grid-template-columns: repeat(2, 1fr); /* Keep 2 cols on mobile for compactness */
+    gap: 0.5rem;
+  }
+  
+  .skill-pill {
+    font-size: 0.6rem;
+    padding: 0.35rem 0.6rem;
+  }
+  
+  .skills-title {
+    font-size: 1.4rem;
+    margin-bottom: 0.75rem;
   }
 }
 

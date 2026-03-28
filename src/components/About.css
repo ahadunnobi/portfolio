@@ -49,6 +49,19 @@
 @media (max-width: 768px) {
   .about-grid {
     grid-template-columns: 1fr;
-    gap: 2rem;
+    gap: 1.5rem;
+  }
+  
+  .about-grid h2 {
+    font-size: 1.5rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+  
+  .about-grid div {
+    font-size: 0.85rem !important;
+  }
+
+  .stats-grid {
+    gap: 0.75rem;
   }
 }

@@ -97,9 +97,8 @@ h1, h2, h3 {
 
 @media (max-width: 768px) {
   body, #root {
-    overflow: auto;
-    height: auto;
-    min-height: 100vh;
+    overflow: hidden;
+    height: 100vh;
   }
 }
 
@@ -113,13 +112,6 @@ h1, h2, h3 {
   flex-direction: column;
 }
 
-@media (max-width: 768px) {
-  .spa-container {
-    height: auto;
-    overflow: visible;
-  }
-}
-
 .section-view {
   position: absolute;
   top: var(--nav-height);
@@ -130,18 +122,15 @@ h1, h2, h3 {
   display: flex;
   align-items: center;
   justify-content: center;
-  padding: 2rem 0 0.5rem 0;
 }
 
 @media (max-width: 768px) {
   .section-view {
-    position: relative;
+    position: absolute;
     top: 0;
     bottom: 0;
-    min-height: calc(100vh - var(--nav-height) - var(--footer-height));
-    height: auto;
-    overflow: visible;
-    padding: 2.5rem 0;
+    height: 100vh;
+    padding: 1.5rem 0;
   }
 }
 

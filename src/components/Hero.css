@@ -107,56 +107,46 @@
 @media (max-width: 768px) {
   .hero-grid {
     grid-template-columns: 1fr;
-    gap: 2.5rem;
+    gap: 1.5rem; /* Reduced gap */
   }
 
-  .hero-text-side {
-    order: 2;
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-
-  .hero-image-side {
-    order: 1;
-    display: flex;
-    justify-content: center;
+  .hero-title {
+    font-size: 2.2rem; /* Scaled down */
+    margin-bottom: 0.5rem;
   }
 
   .hero-desc {
-    max-width: 100%;
+    font-size: 0.85rem;
+    margin-bottom: 1rem;
+    line-height: 1.4;
   }
 
   .hero-stats {
-    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1.5rem;
+  }
+
+  .hero-stat-item {
+    font-size: 0.75rem;
+  }
+
+  .hero-actions {
     gap: 1rem;
-    align-items: center;
   }
 
-  .desktop-only {
-    display: none !important;
-  }
-
-  .mobile-tag {
-    display: block;
-  }
-
-  .mobile-tag.top-left {
-    top: -10px;
-    left: -10px;
-  }
-
-  .mobile-tag.top-right {
-    top: -20px;
-    right: -20px;
-    background: var(--surface2);
-    color: var(--accent);
-    border: 1px solid var(--accent);
+  .btn-primary, .btn-ghost {
+    padding: 0.8rem 1.5rem;
+    font-size: 0.7rem;
   }
 
   .profile-wrapper {
-    width: 240px;
-    height: 320px;
+    width: 180px; /* Smaller image */
+    height: 240px;
+  }
+
+  .mobile-tag.top-right {
+    top: -15px;
+    right: -15px;
+    font-size: 0.55rem;
   }
 }

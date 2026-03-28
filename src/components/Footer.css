@@ -8,3 +8,47 @@
   border-top: 1px solid var(--border);
   z-index: 1000;
 }
+.footer-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.footer-copyright {
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--muted);
+  fontWeight: 600;
+}
+
+.footer-tech-info {
+  display: flex;
+  gap: 4rem;
+  font-family: var(--font-mono);
+  font-size: 0.95rem;
+  color: var(--muted);
+}
+
+.accent-text {
+  color: var(--accent);
+  font-weight: 800;
+}
+
+@media (max-width: 768px) {
+  .footer-fix {
+    height: 50px;
+  }
+  
+  .footer-container {
+    justify-content: center;
+  }
+
+  .footer-copyright {
+    font-size: 0.6rem;
+    text-align: center;
+  }
+
+  .footer-tech-info {
+    display: none; /* Hide tech info on small screens to save space */
+  }
+}
