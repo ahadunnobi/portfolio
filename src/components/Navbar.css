@@ -56,13 +56,12 @@
 
   .mobile-brand-link {
     writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
+    text-orientation: upright;
     color: var(--accent);
     font-family: var(--font-head);
     font-weight: 800;
     font-size: 0.8rem;
-    letter-spacing: 0.2em;
+    letter-spacing: -0.1em;
     cursor: pointer;
     margin-bottom: 1rem;
   }
@@ -72,15 +71,14 @@
     border: none;
     color: var(--muted);
     font-family: var(--font-mono);
-    font-size: 0.6rem;
+    font-size: 0.55rem;
     writing-mode: vertical-rl;
-    text-orientation: mixed;
-    transform: rotate(180deg);
+    text-orientation: upright;
     cursor: pointer;
     text-transform: uppercase;
-    letter-spacing: 0.1em;
+    letter-spacing: -0.1em;
     transition: all 0.3s ease;
-    padding: 0.5rem 0;
+    padding: 0.4rem 0;
   }
 
   .aside-nav-item.active {
