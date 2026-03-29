@@ -50,37 +50,48 @@
   .about-grid {
     display: flex;
     flex-direction: column-reverse;
-    gap: 1.5rem;
-    padding: 0 1.5rem; /* Aggressive side buffer to guarantee no overlap */
+    gap: 0.5rem; /* Super squished vertical gap */
+    padding: 0 1.5rem;
   }
   
   .about-grid h2 {
-    font-size: 1.2rem !important; /* Decreased further */
-    margin-bottom: 0.5rem !important;
+    font-size: 1.1rem !important; /* Even smaller to save height */
+    margin-bottom: 0.25rem !important;
     text-align: center;
-    padding: 0 1rem; /* Local squeeze */
+    padding: 0 1rem;
+    line-height: 1 !important;
   }
   
   .about-grid > div:first-child > div {
-    font-size: 0.75rem !important;
+    font-size: 0.70rem !important;
     text-align: center;
     padding: 0 0.5rem;
+    line-height: 1.3 !important;
+  }
+
+  /* Hide the middle paragraph precisely to cut vertical height so zero-scroll doesn't clip the top/bottom */
+  .about-grid > div:first-child > div p:nth-child(2) {
+    display: none !important; 
+  }
+
+  .about-grid > div:first-child > div p {
+    margin-bottom: 0.25rem !important;
   }
 
   .stats-grid {
-    gap: 0.75rem;
+    gap: 0.5rem;
   }
 
-  .stat-card {
+  .about-grid .stat-card {
     padding: 0.85rem !important; /* Physically shrink the card */
   }
 
-  .stat-card > div:first-child {
+  .about-grid .stat-card > div:first-child {
     font-size: 1.4rem !important; /* Shrink the statistic number */
     margin-bottom: 0.25rem !important;
   }
 
-  .stat-card > div:last-child {
+  .about-grid .stat-card > div:last-child {
     font-size: 0.6rem !important; /* Shrink the label a tiny bit more */
     letter-spacing: 0.05em !important; /* Reduce tracking significantly for long words */
     word-break: break-word; /* Ensure it breaks rather than spilling out */

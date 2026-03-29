@@ -19,18 +19,26 @@
 
 @media (max-width: 640px) {
   .skills-grid {
-    grid-template-columns: 1fr; /* Switched to 1 column for vertical scrolling */
-    gap: 1rem; /* Increased gap for better vertical breathing room */
+    grid-template-columns: repeat(2, 1fr); /* Force 2 columns to save height */
+    gap: 0.4rem; /* Extremely tight gap */
   }
   
   .skill-pill {
-    font-size: 0.6rem;
-    padding: 0.35rem 0.6rem;
+    font-size: 0.55rem;
+    padding: 0.25rem 0.4rem;
   }
   
   .skills-title {
-    font-size: 1.4rem;
-    margin-bottom: 0.75rem;
+    font-size: 1.2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .stat-card {
+    padding: 0.6rem !important; /* Aggressive internal shrink */
+  }
+
+  .stat-card h3 {
+    font-size: 0.7rem !important; /* Shrink card headings */
   }
 }
 

@@ -123,11 +123,10 @@
     align-items: center;
     text-align: center;
     width: 100%;
-    /* Stack layout: Height is natural, content starts from top */
     height: auto; 
     justify-content: flex-start; 
-    padding: 2rem 0; /* Let flex naturally center it, provide baseline scrolling padding */
-    gap: 1.5rem; /* Consistent spacing between top/middle/bottom blocks */
+    padding: 0.25rem 0; /* Zero scrolling demands tight vertical packing */
+    gap: 0.75rem; /* Squeezed spacing */
   }
 
   .hero-mobile-top {
@@ -163,7 +162,6 @@
   }
 
   .hero-mobile-middle {
-    /* No longer needs flex:1, just a wrapper in the stack */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -172,8 +170,8 @@
 
   .profile-wrapper-mobile {
     position: relative;
-    width: 215px; /* Shrunk down to avoid side menu overlap securely */
-    height: 285px;
+    width: 150px; /* Severely shrunk to fit in 100vh */
+    height: 200px;
     z-index: 2;
   }
 
