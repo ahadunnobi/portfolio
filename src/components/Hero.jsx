@@ -70,7 +70,7 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="w-full max-w-6xl flex flex-col md:flex-row items-center justify-between gap-12 lg:gap-24 relative z-10 px-4">
+      <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row items-center justify-between gap-12 lg:gap-24 relative z-10 px-4">
         
         {/* Left Content */}
         <div className="flex-1 text-center md:text-left">
