@@ -28,24 +28,24 @@ const Hero = () => {
       label: "Years of Experience", 
       value: "3", 
       icon: <FiBriefcase className="text-cyan-400" />,
-      position: "top-[55%] -left-20"
+      position: "top-[70%] -left-4 md:-left-20"
     },
     { 
       label: "Problem Solving", 
       value: "120", 
       icon: <FiZap className="text-yellow-400" />,
-      position: "-top-12 right-0"
+      position: "-top-6 md:-top-12 right-0"
     },
     { 
       label: "Finished Projects", 
       value: "150", 
       icon: <FiLayers className="text-purple-400" />,
-      position: "top-[15%] -right-24"
+      position: "top-[45%] -right-6 md:-right-25"
     },
   ];
 
   return (
-    <section className="relative min-h-screen flex items-center justify-center pt-24 pb-10 px-6 overflow-hidden">
+    <section className="relative h-[100dvh] flex items-center justify-center pt-8 md:pt-24 pb-4 md:pb-10 px-4 md:px-6 overflow-hidden">
       {/* Background Glows */}
       <div className="absolute top-1/4 -left-20 w-96 h-96 bg-cyan-500/10 rounded-full blur-[120px]" />
       <div className="absolute bottom-1/4 -right-20 w-96 h-96 bg-blue-600/10 rounded-full blur-[120px]" />
@@ -70,7 +70,7 @@ const Hero = () => {
         ))}
       </div>
 
-      <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row items-center justify-between gap-12 lg:gap-24 relative z-10 px-4">
+      <div className="w-full max-w-6xl flex flex-col-reverse md:flex-row items-center justify-between gap-6 md:gap-12 lg:gap-24 relative z-10 px-4">
         
         {/* Left Content */}
         <div className="flex-1 text-center md:text-left">
@@ -78,7 +78,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5 }}
-            className="flex items-center justify-center md:justify-start gap-2 mb-4"
+            className="flex items-center justify-center md:justify-start gap-2 mb-2 md:mb-4"
           >
             <motion.span 
               animate={{ rotate: [0, 20, 0] }}
@@ -96,12 +96,12 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.1 }}
-            className="text-5xl lg:text-7xl font-black text-white tracking-tighter mb-4 leading-tight"
+            className="text-4xl md:text-5xl lg:text-7xl font-black text-white tracking-tighter mb-2 md:mb-4 leading-none md:leading-tight"
           >
             Ahadun Nobi<span className="text-cyan-400">.</span>
           </motion.h1>
           
-          <div className="h-12 flex items-center justify-center md:justify-start">
+          <div className="h-8 md:h-12 flex items-center justify-center md:justify-start">
             <AnimatePresence mode="wait">
               <motion.h2
                 key={roleIndex}
@@ -109,7 +109,7 @@ const Hero = () => {
                 animate={{ opacity: 1, y: 0 }}
                 exit={{ opacity: 0, y: -10 }}
                 transition={{ duration: 0.3 }}
-                className="text-xl lg:text-2xl text-cyan-400 font-bold tracking-tight"
+                className="text-lg md:text-xl lg:text-2xl text-cyan-400 font-bold tracking-tight"
               >
                 {roles[roleIndex]}
               </motion.h2>
@@ -120,7 +120,7 @@ const Hero = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.5, delay: 0.3 }}
-            className="space-y-4 mt-6 mb-12"
+            className="space-y-2 md:space-y-4 mt-4 md:mt-6 mb-6 md:mb-12"
           >
             <div className="flex items-center justify-center md:justify-start gap-3 text-white/50 text-sm">
               <span className="w-6 h-[1px] bg-cyan-400/30 hidden md:block" />
@@ -137,7 +137,7 @@ const Hero = () => {
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <button className="group relative px-10 py-5 bg-cyan-500 text-black font-black rounded-full overflow-hidden transition-all hover:pr-14 active:scale-95 shadow-[0_0_30px_rgba(6,182,212,0.4)]">
+            <button className="group relative px-8 py-3 md:px-10 md:py-5 bg-cyan-500 text-black font-black rounded-full overflow-hidden transition-all hover:pr-14 active:scale-95 shadow-[0_0_30px_rgba(6,182,212,0.4)]">
               <span className="relative z-10 flex items-center gap-3">
                 Say Hello <HiOutlineMail className="text-2xl" />
               </span>
@@ -152,7 +152,7 @@ const Hero = () => {
             initial={{ opacity: 0, scale: 0.8 }}
             animate={{ opacity: 1, scale: 1 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="relative w-72 h-72 lg:w-96 lg:h-96"
+            className="relative w-80 h-80 lg:w-96 lg:h-96 mt-6 md:mt-0"
           >
             {/* Morphing Wavy Blob Container */}
             <motion.div 
@@ -229,14 +229,14 @@ const Hero = () => {
                   y: { repeat: Infinity, duration: 3 + i, ease: "easeInOut" },
                   x: { repeat: Infinity, duration: 4 + i, ease: "easeInOut" }
                 }}
-                className={`absolute ${stat.position} glass-pill p-3 px-4 rounded-2xl flex items-center gap-3 z-30`}
+                className={`absolute ${stat.position} glass-pill p-2 md:p-3 px-3 md:px-4 rounded-2xl flex items-center gap-2 md:gap-3 z-30`}
               >
-                <div className="w-10 h-10 rounded-xl bg-white/5 flex items-center justify-center text-xl shadow-lg border border-white/10">
+                <div className="w-8 h-8 md:w-10 md:h-10 rounded-xl bg-white/5 flex items-center justify-center text-lg md:text-xl shadow-lg border border-white/10">
                   {stat.icon}
                 </div>
                 <div>
-                  <p className="text-white font-black text-lg leading-none">{stat.value}+</p>
-                  <p className="text-white/40 text-[9px] uppercase tracking-wider font-bold mt-1">{stat.label}</p>
+                  <p className="text-white font-black text-base md:text-lg leading-none">{stat.value}+</p>
+                  <p className="text-white/40 text-[8px] md:text-[9px] uppercase tracking-wider font-bold mt-1">{stat.label}</p>
                 </div>
               </motion.div>
             ))}

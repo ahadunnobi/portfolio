@@ -58,8 +58,8 @@ const Navbar = () => {
             </Link>
           </div>
 
-          <div className="absolute left-1/2 -translate-x-1/2 hidden lg:block">
-            <ul className="flex items-center gap-10">
+          <div className="absolute left-1/2 -translate-x-1/2 hidden md:block">
+            <ul className="flex items-center gap-6 lg:gap-10">
               {navItems.map((item) => (
                 <li key={item.name}>
                   <Link
