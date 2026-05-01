@@ -1,5 +1,7 @@
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
+import About from "@/components/About";
+import TechStack from "@/components/TechStack";
 
 export default function Home() {
   return (
@@ -9,9 +11,9 @@ export default function Home() {
       
       {/* Sections for navigation anchors */}
       <section id="ahad" className="min-h-screen bg-black/20" />
-      <section id="about" className="min-h-screen bg-black/20" />
+      <About />
       <section id="experience" className="min-h-screen" />
-      <section id="tech-stack" className="min-h-screen bg-black/20" />
+      <TechStack />
       <section id="projects" className="min-h-screen" />
       <section id="contact" className="min-h-screen bg-black/20" />
       <section id="blog" className="min-h-screen" />
