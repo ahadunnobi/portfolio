@@ -41,53 +41,53 @@ const Navbar = () => {
       {/* Desktop Navbar (Top, Full Width Header with Centered Content) */}
       <nav className="fixed top-0 left-0 w-full z-[100] hidden md:block">
         <div className="bg-background/80 backdrop-blur-2xl border-b border-white/10 h-16 flex justify-center shadow-2xl">
-          <div className="w-full max-w-5xl px-8 flex items-center justify-between h-full">
-            <div className="flex items-center">
-              <Link 
-                href="/" 
-                onClick={() => setActiveItem("Home")}
-                className="flex items-center transition-transform hover:scale-110 active:scale-95"
-              >
-                <Image
-                  src="/logo.png"
-                  alt="Ahadun Nobi Logo"
-                  width={42}
-                  height={42}
-                  className="rounded-none brightness-125 contrast-125"
-                />
-              </Link>
-            </div>
-
-            <div className="flex-1 flex justify-center mx-8">
-              <ul className="flex items-center gap-8">
-                {navItems.map((item) => (
-                  <li key={item.name}>
-                    <Link
-                      href={item.href}
-                      onClick={() => setActiveItem(item.name)}
-                      className={`group flex items-center gap-2 text-[14px] tracking-widest font-black transition-all duration-300 ${
-                        activeItem === item.name ? "text-cyan-400" : "text-white/40 hover:text-white"
-                      }`}
-                    >
-                      <span className={`text-xl transition-transform duration-300 group-hover:scale-125 ${activeItem === item.name ? "text-cyan-400 drop-shadow-[0_0_8px_#00f2ff]" : "text-white/20"}`}>
-                        {item.icon}
-                      </span>
-                      {item.name}
-                    </Link>
-                  </li>
-                ))}
-              </ul>
-            </div>
-
-            <div className="flex items-center">
-              <button
-                className={`btn btn-ghost btn-circle transition-all duration-500 ${isDark ? "text-cyan-400 hover:bg-cyan-400/10" : "text-blue-600 hover:bg-blue-600/10"}`}
-                onClick={() => setIsDark(!isDark)}
-              >
-                {isDark ? <HiSun className="text-2xl" /> : <HiMoon className="text-2xl" />}
-              </button>
-            </div>
+        <div className="w-full max-w-6xl px-8 flex items-center justify-between h-full relative">
+          <div className="flex items-center z-10">
+            <Link 
+              href="/" 
+              onClick={() => setActiveItem("Home")}
+              className="flex items-center transition-transform hover:scale-110 active:scale-95"
+            >
+              <Image
+                src="/logo.png"
+                alt="Logo"
+                width={42}
+                height={42}
+                className="rounded-none brightness-125 contrast-125"
+              />
+            </Link>
           </div>
+
+          <div className="absolute left-1/2 -translate-x-1/2 hidden lg:block">
+            <ul className="flex items-center gap-10">
+              {navItems.map((item) => (
+                <li key={item.name}>
+                  <Link
+                    href={item.href}
+                    onClick={() => setActiveItem(item.name)}
+                    className={`group flex items-center gap-2 text-[14px] tracking-widest font-black transition-all duration-300 ${
+                      activeItem === item.name ? "text-cyan-400" : "text-white/40 hover:text-white"
+                    }`}
+                  >
+                    <span className={`text-xl transition-transform duration-300 group-hover:scale-125 ${activeItem === item.name ? "text-cyan-400 drop-shadow-[0_0_8px_#00f2ff]" : "text-white/20"}`}>
+                      {item.icon}
+                    </span>
+                    {item.name}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+
+          <div className="flex items-center z-10">
+            <button
+              className={`btn btn-ghost btn-circle transition-all duration-500 ${isDark ? "text-cyan-400 hover:bg-cyan-400/10" : "text-blue-600 hover:bg-blue-600/10"}`}
+              onClick={() => setIsDark(!isDark)}
+            >
+              {isDark ? <HiSun className="text-2xl" /> : <HiMoon className="text-2xl" />}
+            </button>
+          </div>
+        </div>
         </div>
       </nav>
 
