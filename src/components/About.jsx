@@ -21,7 +21,6 @@ const About = () => {
         className="text-center mb-16 relative z-10"
       >
         <h2 className="text-4xl md:text-5xl font-black text-white mb-2 tracking-tight">About</h2>
-        <p className="text-white/60 text-sm md:text-base font-medium">My Introduction</p>
       </motion.div>
 
       <div className="max-w-6xl w-full grid grid-cols-1 md:grid-cols-2 gap-12 lg:gap-24 items-center relative z-10">
@@ -33,17 +32,15 @@ const About = () => {
           transition={{ duration: 0.6 }}
           className="flex justify-center md:justify-end"
         >
-          <div className="relative w-[300px] h-[380px] md:w-[380px] md:h-[450px] rounded-3xl overflow-hidden glass p-2 group">
-            <div className="w-full h-full relative rounded-2xl overflow-hidden">
+          <div className="relative w-[300px] h-[380px] md:w-[380px] md:h-[450px] group">
+            <div className="w-full h-full relative overflow-hidden">
               <Image 
-                src="/profile.png" 
+                src="/anime.png"    
                 alt="Ahadun Nobi" 
                 fill
                 className="object-cover object-center transition-transform duration-700 group-hover:scale-105"
               />
             </div>
-            {/* Subtle overlay gradient for image */}
-            <div className="absolute inset-0 bg-gradient-to-t from-[#020617] via-transparent to-transparent opacity-60 pointer-events-none rounded-3xl"></div>
           </div>
         </motion.div>
 

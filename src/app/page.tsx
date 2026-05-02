@@ -2,6 +2,9 @@ import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import About from "@/components/About";
 import TechStack from "@/components/TechStack";
+import Projects from "@/components/Projects";
+import Contact from "@/components/Contact";
+import Footer from "@/components/Footer";
 
 export default function Home() {
   return (
@@ -9,14 +12,11 @@ export default function Home() {
       <Navbar />
       <Hero />
       
-      {/* Sections for navigation anchors */}
-      <section id="ahad" className="min-h-screen bg-black/20" />
       <About />
-      <section id="experience" className="min-h-screen" />
       <TechStack />
-      <section id="projects" className="min-h-screen" />
-      <section id="contact" className="min-h-screen bg-black/20" />
-      <section id="blog" className="min-h-screen" />
+      <Projects />
+      <Contact />
+      <Footer />
     </main>
   );
 }
